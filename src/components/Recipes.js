@@ -11,8 +11,8 @@ function Recipes(props) {
     <div>
       <Header history={ history } />
       {history.location.pathname === '/foods'
-      ? <FoodsRecipes />
-      : <DrinksRecipes />}
+        ? <FoodsRecipes />
+        : <DrinksRecipes />}
     </div>
   );
 }
