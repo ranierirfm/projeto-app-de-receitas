@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes, { object } from 'prop-types';
 import DrinksRecipes from '../pages/DrinksRecipes';
 import FoodsRecipes from '../pages/FoodsRecipes';
-import Header from '../components/Header';
+import Header from './Header';
 
 function Recipes(props) {
   const { history } = props;
 
   return (
     <div>
-      <Header history={history}/>
+      <Header history={ history } />
       {history.location.pathname === '/foods'
-    ? <FoodsRecipes />
-    : <DrinksRecipes />}
+      ? <FoodsRecipes />
+      : <DrinksRecipes />}
     </div>
-  )
+  );
 }
 
 Recipes.propTypes = {
