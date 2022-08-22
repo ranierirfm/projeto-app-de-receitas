@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
+import Footer from './Footer';
 
 function FilterFoodButtons() {
   const { foodsFilters, foodFiltered, setFoodFiltered } = useContext(MyRecipesContext);
@@ -31,6 +32,7 @@ function FilterFoodButtons() {
           </button>
         ))
       }
+      <Footer />
     </div>
   );
 }

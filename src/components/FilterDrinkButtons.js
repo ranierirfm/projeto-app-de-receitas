@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
+import Footer from './Footer';
 
 function FilterDrinkButtons() {
   const { drinksFilters, drinkFiltered, setDrinkFiltered } = useContext(MyRecipesContext);
@@ -29,8 +30,10 @@ function FilterDrinkButtons() {
           >
             { strCategory }
           </button>
+
         ))
       }
+      <Footer />
     </div>
   );
 }

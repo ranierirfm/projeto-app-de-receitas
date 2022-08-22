@@ -1,5 +1,6 @@
-import React from 'react';
 import PropTypes, { object } from 'prop-types';
+import React from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Profile(props) {
@@ -9,6 +10,7 @@ function Profile(props) {
     <>
       <Header history={ history } />
       <p>Página de Perfil</p>
+      <Footer />
     </>
   );
 }
