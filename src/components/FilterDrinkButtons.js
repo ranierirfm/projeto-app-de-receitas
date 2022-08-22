@@ -3,7 +3,19 @@ import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
 import Footer from './Footer';
 
 function FilterDrinkButtons() {
-  const { drinksFilters } = useContext(MyRecipesContext);
+  const { drinksFilters, drinkFiltered, setDrinkFiltered } = useContext(MyRecipesContext);
+
+  const selectFilter = async ({ target }) => {
+    const { id } = target;
+    const END_POINT = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${id}`;
+    const TWELVE = 12;
+    const { drinks } = await fetch(END_POINT).then((response) => response.json());
+    setDrinkFiltered({
+      ...drinkFiltered,
+      drinkList: drinks.filter((_drink, index) => index < TWELVE),
+      toggle: !drinkFiltered.toggle,
+    });
+  };
 
   return (
     <div className="filters-buttons">
@@ -13,7 +25,8 @@ function FilterDrinkButtons() {
             key={ strCategory }
             type="button"
             data-testid={ `${strCategory}-category-filter` }
-            onClick={ () => {} }
+            id={ strCategory }
+            onClick={ selectFilter }
           >
             { strCategory }
           </button>

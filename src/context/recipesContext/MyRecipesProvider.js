@@ -7,6 +7,8 @@ function MyRecipesProvider({ children }) {
   const [drinksRecipes, setDrinksRecipes] = useState([]);
   const [foodsFilters, setFoodsFilters] = useState([]);
   const [drinksFilters, setDrinksFilters] = useState([]);
+  const [foodFiltered, setFoodFiltered] = useState({ foodList: [], toggle: false });
+  const [drinkFiltered, setDrinkFiltered] = useState({ drinkList: [], toggle: false });
 
   useEffect(() => {
     const fetchFoodsRecipes = async () => {
@@ -53,6 +55,10 @@ function MyRecipesProvider({ children }) {
     drinksRecipes,
     foodsFilters,
     drinksFilters,
+    foodFiltered,
+    setFoodFiltered,
+    drinkFiltered,
+    setDrinkFiltered,
   };
   return (
     <MyRecipesContext.Provider value={ contextValue }>
