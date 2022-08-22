@@ -31,5 +31,6 @@ function Footer() {
     </footer>
   );
 }
+// teste
 
 export default Footer;
