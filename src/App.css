@@ -16,3 +16,25 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+.header {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  justify-items: center;
+  padding: 7px;
+}
+
+.header-inputs {
+  align-items: center;
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  justify-items: center;
+  padding: 7px;
+}
+
+.page-title {
+  width: 60%;
+}
