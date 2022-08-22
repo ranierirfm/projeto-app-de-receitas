@@ -13,7 +13,8 @@ function FilterFoodButtons() {
     setFoodFiltered({
       ...foodFiltered,
       foodList: meals.filter((_food, index) => index < TWELVE),
-      toggle: !foodFiltered.toggle,
+      toggle: id === foodFiltered.id ? !foodFiltered.toggle : true,
+      id,
     });
   };
 
