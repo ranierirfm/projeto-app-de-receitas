@@ -6,7 +6,6 @@ import searchIcon from '../images/searchIcon.svg';
 function Header(props) {
   const { history } = props;
   const { location: { pathname } } = history;
-  console.log(props);
 
   const handleProfileBtn = () => {
     history.push('/profile');
@@ -43,7 +42,6 @@ function Header(props) {
       return <h1 data-testid="page-title">Favorite Recipes</h1>;
 
     default:
-      break;
     }
   };
 
