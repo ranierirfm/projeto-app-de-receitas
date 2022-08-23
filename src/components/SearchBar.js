@@ -8,6 +8,7 @@ function SearchBar() {
         name="search-input"
         id="search-input"
         data-testid="search-input"
+        placeholder="Buscar..."
       />
     </label>
   );
