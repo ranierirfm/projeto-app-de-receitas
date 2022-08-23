@@ -2,6 +2,7 @@ import React from 'react';
 import renderWithRouter from './helpers/renderWithRouter';
 import App from '../App';
 import { screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 
 describe('Testing foods recipes main page', () => {
   test('Testing if have a title and buttons filters', async () => {
@@ -16,6 +17,7 @@ describe('Testing foods recipes main page', () => {
     const chickenFilter = await screen.findByRole("button", { name: /chicken/i });
     const dessertFilter = await screen.findByRole("button", { name: /dessert/i });
     const goatFilter = await screen.findByRole("button", { name: /goat/i });
+    const removeFilter = screen.getByRole("button", { name: /all/i });
 
     expect(foodTitle).toBeInTheDocument();
     expect(searchInput).toBeInTheDocument();
@@ -25,8 +27,8 @@ describe('Testing foods recipes main page', () => {
     expect(chickenFilter).toBeInTheDocument();
     expect(dessertFilter).toBeInTheDocument();
     expect(goatFilter).toBeInTheDocument();
+    expect(removeFilter).toBeInTheDocument();
     
-    screen.logTestingPlaygroundURL();
   })
   test('Testing if have images cards and your length in food recipes page', async () => {
     const { history } = renderWithRouter(<App />);
@@ -34,10 +36,17 @@ describe('Testing foods recipes main page', () => {
 
     const allImageCards = await screen.findAllByRole("img");
 
-    expect(allImageCards).toHaveLength(12);
-
+    expect(allImageCards).toHaveLength(2);
     expect(history.location.pathname).toBe('/foods');
 
+  })
+  test('testing if filters work correctly', async () => {
+    // const { history } = renderWithRouter(<App />);
+    // history.push('/foods')
+
+    // const beefFilter = await screen.findByRole("button", { name: /beef/i });
+    // userEvent.click(beefFilter);
+    // screen.logTestingPlaygroundURL();
   })
 })
 
@@ -54,6 +63,7 @@ describe('Testing drinks recipes main page', () => {
     const shakeFilter = await screen.findByRole("button", { name: /shake/i });
     const otherUnknownFilter = await screen.findByRole("button", { name: /other\/unknown/i });
     const cocoaFilter = await screen.findByRole("button", { name: /cocoa/i });
+    const removeFilter = screen.getByRole("button", { name: /all/i });
 
     expect(drinkTitle).toBeInTheDocument();
     expect(searchInput).toBeInTheDocument();
@@ -63,6 +73,8 @@ describe('Testing drinks recipes main page', () => {
     expect(shakeFilter).toBeInTheDocument();
     expect(otherUnknownFilter).toBeInTheDocument();
     expect(cocoaFilter).toBeInTheDocument();
+    expect(removeFilter).toBeInTheDocument();
+
   })
   test('Testing if have images cards and your length in drink recipes page', async () => {
     const { history } = renderWithRouter(<App />);
@@ -70,8 +82,7 @@ describe('Testing drinks recipes main page', () => {
 
     const allImageCards = await screen.findAllByRole("img");
 
-    expect(allImageCards).toHaveLength(12);
-
+    expect(allImageCards).toHaveLength(2);
     expect(history.location.pathname).toBe('/drinks');
 
   })

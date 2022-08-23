@@ -10,8 +10,8 @@ function RemoveFilterButton() {
   } = useContext(MyRecipesContext);
 
   const removeAllFilters = () => {
-    setFoodFiltered({ ...foodFiltered, toggle: false });
-    setDrinkFiltered({ ...drinkFiltered, toggle: false });
+    setFoodFiltered({ ...foodFiltered, toggle: false, id: '' });
+    setDrinkFiltered({ ...drinkFiltered, toggle: false, id: '' });
   };
 
   return (

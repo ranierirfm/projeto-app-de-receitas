@@ -13,7 +13,8 @@ function FilterDrinkButtons() {
     setDrinkFiltered({
       ...drinkFiltered,
       drinkList: drinks.filter((_drink, index) => index < TWELVE),
-      toggle: !drinkFiltered.toggle,
+      toggle: id === drinkFiltered.id ? !drinkFiltered.toggle : true,
+      id,
     });
   };
 
