@@ -1,23 +1,34 @@
 .footer {
+  align-items: center;
   background: #c4c4c4;
+  bottom: 0;
+  display: flex;
   height: 58px;
+  justify-content: space-between;
   position: fixed;
-  top: 582px;
-  width: 360px;
+  width: 100%;
 }
 
 .drink {
+
+  /* bottom: 1.3%; */
   height: 40px;
-  left: 16px;
-  position: fixed;
-  top: 591px;
+  margin-left: 20px;
+  padding: 7px;
   width: 40px;
 }
 
 .food {
+
+  /* bottom: 1.3%; */
+
+  /* left: 302px; */
+
+  /* position: fixed; */
   height: 40px;
-  left: 302px;
-  position: fixed;
-  top: 593px;
+  margin-right: 20px;
+  padding: 7px;
   width: 40px;
+
+
 }
