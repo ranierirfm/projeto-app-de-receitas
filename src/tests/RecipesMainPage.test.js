@@ -1,8 +1,7 @@
-import React from 'react';
-import renderWithRouter from './helpers/renderWithRouter';
-import App from '../App';
 import { screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event'
+import React from 'react';
+import App from '../App';
+import renderWithRouter from './helpers/renderWithRouter';
 
 describe('Testing foods recipes main page', () => {
   test('Testing if have a title and buttons filters', async () => {

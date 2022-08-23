@@ -9,8 +9,10 @@ function Profile(props) {
   const getEmail = () => {
     const email = localStorage.getItem('user');
     const emailParse = JSON.parse(email);
-    return (
-      <h1 data-testid="profile-email">{emailParse.email}</h1>);
+    if (emailParse !== null) {
+      return (<h1 data-testid="profile-email">{emailParse.email}</h1>);
+    }
+    (<h1 data-testid="profile-email">email</h1>);
   };
 
   const handleLogout = () => {
