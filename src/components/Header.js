@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes, { object } from 'prop-types';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header(props) {
-  const { history: { location: { pathname } } } = props;
+  const [toggle, setToggle] = useState(false);
+
+  const { history } = props;
+  const { location: { pathname } } = history;
+
+  const handleProfileBtn = () => {
+    history.push('/profile');
+  };
+
+  const handleSearchTopBtn = () => (toggle ? setToggle(false) : setToggle(true));
 
   const searchTest = () => {
     if (pathname === '/foods' || pathname === '/drinks') {
@@ -13,7 +23,9 @@ function Header(props) {
           src={ searchIcon }
           alt="Search"
           type="image"
+          name="search-top-btn"
           data-testid="search-top-btn"
+          onClick={ handleSearchTopBtn }
         />);
     }
   };
@@ -32,25 +44,33 @@ function Header(props) {
     case '/done-recipes':
       return <h1 data-testid="page-title">Done Recipes</h1>;
 
-    case '/favorite-recipes':
-      return <h1 data-testid="page-title">Favorite Recipes</h1>;
-
     default:
-      break;
+      return <h1 data-testid="page-title">Favorite Recipes</h1>;
     }
   };
 
   return (
-    <header>
-      <input
-        src={ profileIcon }
-        type="image"
-        alt="Profile Icon"
-        data-testid="profile-top-btn"
-      />
-      {searchTest()}
-      {pageTitle()}
-
+    <header className="header-container">
+      <section className="header">
+        <label htmlFor="profile-icon">
+          <input
+            src={ profileIcon }
+            type="image"
+            name="profile-icon"
+            alt="Profile Icon"
+            className="profile-input"
+            data-testid="profile-top-btn"
+            onClick={ handleProfileBtn }
+          />
+        </label>
+        <div className="page-title">{pageTitle()}</div>
+        <label htmlFor="search-top-btn">
+          {searchTest()}
+        </label>
+      </section>
+      <div>
+        {toggle ? <SearchBar /> : ''}
+      </div>
     </header>
   );
 }

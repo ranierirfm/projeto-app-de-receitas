@@ -5,6 +5,7 @@ import FoodsRecipes from '../pages/FoodsRecipes';
 import Header from './Header';
 import FilterFoodButtons from './FilterFoodButtons';
 import FilterDrinkButtons from './FilterDrinkButtons';
+import RemoveFilterButton from './RemoveFiltersButton';
 
 function Recipes(props) {
   const { history } = props;
@@ -16,6 +17,7 @@ function Recipes(props) {
       {pathname === '/foods'
         ? <FilterFoodButtons />
         : <FilterDrinkButtons />}
+      <RemoveFilterButton />
       {pathname === '/foods'
         ? <FoodsRecipes />
         : <DrinksRecipes />}
