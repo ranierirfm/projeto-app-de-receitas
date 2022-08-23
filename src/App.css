@@ -1,5 +1,5 @@
 .card-image {
-  width: 150px;
+  width: 100%;
 }
 
 .card {
@@ -8,8 +8,13 @@
   display: flex;
   flex-direction: column;
   margin: 15px;
-  padding: 20px;
-  width: 200px;
+  padding: 15px;
+}
+
+.cards {
+  color: inherit;
+  text-decoration: none;
+  width: 50%;
 }
 
 .card-container {
@@ -17,24 +22,26 @@
   flex-wrap: wrap;
 }
 
+.header-container {
+  align-items: center;
+  background-color: #ae2012;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 7px;
+}
+
 .header {
   align-items: center;
   display: flex;
   gap: 10px;
-  justify-content: space-between;
+  justify-content: space-around;
   justify-items: center;
   padding: 7px;
-}
-
-.header-inputs {
-  align-items: center;
-  display: flex;
-  gap: 20px;
-  justify-content: space-between;
-  justify-items: center;
-  padding: 7px;
+  width: 100%;
 }
 
 .page-title {
+  text-align: center;
   width: 60%;
 }

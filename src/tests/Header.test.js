@@ -77,4 +77,19 @@ describe('test header based on req 7-9', () => {
     expect(history.location.pathname).toBe('/profile')
 
   })
+
+  it('Tests if clicking the search button the search input is rendered', () => {
+    const {history} = renderWithRouter(<App />);
+
+    history.push('/foods');
+
+    const searchIcon = screen.getByRole('button', { name: /search/i })
+    userEvent.click(searchIcon);
+
+    const searchInput = screen.getByTestId('search-input');
+
+    expect(searchInput).toBeDefined();
+
+    userEvent.click(searchIcon)
+  })
 })
