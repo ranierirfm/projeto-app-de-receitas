@@ -6,11 +6,13 @@ import MyRecipesProvider from './context/recipesContext/MyRecipesProvider';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import Profile from './pages/Profile';
+import Login from './pages/Login';
 
 function App() {
   return (
     <Switch>
       <MyRecipesProvider>
+        <Route exact path="/" component={ Login } />
         <Route exact path="/foods" component={ Recipes } />
         <Route exact path="/drinks" component={ Recipes } />
         <Route exact path="/done-recipes" component={ DoneRecipes } />
