@@ -6,6 +6,13 @@ import Header from '../components/Header';
 function Profile(props) {
   const { history } = props;
 
+  const getEmail = () => {
+    const email = localStorage.getItem('user');
+    const emailParse = JSON.parse(email);
+    return (
+      <h1 data-testid="profile-email">{emailParse.email}</h1>);
+  };
+
   const handleLogout = () => {
     localStorage.clear();
     history.push('/');
@@ -15,7 +22,7 @@ function Profile(props) {
     <>
       <Header history={ history } />
       <p>Página de Perfil</p>
-      <h1 data-testid="profile-email">email</h1>
+      { getEmail() }
 
       <button
         type="button"
