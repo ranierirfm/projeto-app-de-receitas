@@ -15,6 +15,7 @@ function FoodsRecipes() {
           <Link
             to={ `foods/${idMeal}` }
             key={ strMeal }
+            className="cards"
           >
             <div key={ strMeal } data-testid={ `${index}-recipe-card` } className="card">
               <img

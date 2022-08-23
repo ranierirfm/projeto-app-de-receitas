@@ -8,8 +8,13 @@
   display: flex;
   flex-direction: column;
   margin: 15px;
-  padding: 20px;
-  width: 30%;
+  padding: 15px;
+}
+
+.cards {
+  color: inherit;
+  text-decoration: none;
+  width: 50%;
 }
 
 .card-container {
