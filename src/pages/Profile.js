@@ -6,8 +6,11 @@ import Header from '../components/Header';
 function Profile(props) {
   const { history } = props;
 
-  // const email = localStorage.getItem('user');
-  // const emailParse = JSON.parse(email);
+  const handleLogout = () => {
+    localStorage.clear();
+    history.push('/');
+  };
+
   return (
     <>
       <Header history={ history } />
@@ -18,6 +21,7 @@ function Profile(props) {
         type="button"
         data-testid="profile-done-btn"
         id="Done Recipes"
+        onClick={ () => history.push('/done-recipes') }
       >
         Done Recipes
 
@@ -27,6 +31,8 @@ function Profile(props) {
         type="button"
         data-testid="profile-favorite-btn"
         id="Favorite Recipes"
+        onClick={ () => history.push('/favorite-recipes') }
+
       >
         Favorite Recipes
 
@@ -36,6 +42,7 @@ function Profile(props) {
         type="button"
         data-testid="profile-logout-btn"
         id="Logout"
+        onClick={ handleLogout }
       >
         Logout
 
