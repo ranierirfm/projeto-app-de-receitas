@@ -45,3 +45,8 @@
   text-align: center;
   width: 60%;
 }
+
+.start-recipe-button {
+  bottom: 0%;
+  position: fixed;
+}
