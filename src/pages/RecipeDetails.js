@@ -60,7 +60,7 @@ class RecipeDetails extends React.Component {
         key={ ingredient }
         data-testid={ `${index}-ingredient-name-and-measure` }
       >
-        { ingredient }
+        {ingredient}
       </li>
     ))
   )
@@ -85,14 +85,14 @@ class RecipeDetails extends React.Component {
               alt="Product Recipe"
               data-testid="recipe-photo"
             />
-            <h4 data-testid="recipe-title">{ strMeal }</h4>
-            <p data-testid="recipe-category">{ strCategory }</p>
+            <h4 data-testid="recipe-title">{strMeal}</h4>
+            <p data-testid="recipe-category">{strCategory}</p>
             <ul>
               {
                 this.makeListIngredients(ingredientsMerged)
               }
             </ul>
-            <p data-testid="instructions">{ strInstructions }</p>
+            <p data-testid="instructions">{strInstructions}</p>
             <iframe
               data-testid="video"
               src={ strYoutube.replace('watch?v=', 'embed/') }
@@ -112,11 +112,18 @@ class RecipeDetails extends React.Component {
                       alt="Recomendation Recipe"
                       width="200px"
                     />
-                    <p>{ strAlcoholic }</p>
-                    <h4>{ strDrink }</h4>
+                    <p>{strAlcoholic}</p>
+                    <h4 data-testid={ `${index}-recomendation-title` }>{strDrink}</h4>
                   </div>
                 ))
             }
+            <button
+              type="button"
+              data-testid="start-recipe-btn"
+              className="start-recipe-button"
+            >
+              Start Recipe
+            </button>
           </div>
         ),
       );
@@ -141,14 +148,14 @@ class RecipeDetails extends React.Component {
             alt="Product Recipe"
             data-testid="recipe-photo"
           />
-          <h4 data-testid="recipe-title">{ strDrink }</h4>
-          <p data-testid="recipe-category">{ strAlcoholic }</p>
+          <h4 data-testid="recipe-title">{strDrink}</h4>
+          <p data-testid="recipe-category">{strAlcoholic}</p>
           <ul>
             {
               this.makeListIngredients(ingredientsMerged)
             }
           </ul>
-          <p data-testid="instructions">{ strInstructions }</p>
+          <p data-testid="instructions">{strInstructions}</p>
           {
             foodRecomendation
               .map(({ strCategory, strMealThumb, strMeal, idMeal }, index) => (
@@ -159,13 +166,21 @@ class RecipeDetails extends React.Component {
                   <img
                     src={ strMealThumb }
                     alt="Recomendation Recipe"
-                    width="200px"
+                    width="300px"
+                    heigth="100px"
                   />
-                  <p>{ strCategory }</p>
-                  <h4>{ strMeal }</h4>
+                  <p>{strCategory}</p>
+                  <h4 data-testid={ `${index}-recomendation-title` }>{strMeal}</h4>
                 </div>
               ))
           }
+          <button
+            type="button"
+            data-testid="start-recipe-btn"
+            className="start-recipe-button"
+          >
+            Start Recipe
+          </button>
         </div>
       ));
   };
