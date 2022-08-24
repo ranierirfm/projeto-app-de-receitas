@@ -2,7 +2,7 @@
   width: 100%;
 }
 
-.card {
+.recipe-card {
   border: 2px solid gray;
   border-radius: 5px;
   display: flex;
@@ -15,6 +15,10 @@
   color: inherit;
   text-decoration: none;
   width: 50%;
+}
+
+.cards:nth-last-of-type( 1 ) {
+  margin-bottom: 60px;
 }
 
 .card-container {
@@ -44,4 +48,37 @@
 .page-title {
   text-align: center;
   width: 60%;
+}
+
+.profile-email {
+  font-size: 1.8em;
+}
+
+.profile-container {
+  margin: auto;
+  width: 95%;
+}
+
+.recipe-details-photo {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+.recomendation-img {
+  padding: 7px;
+  width: 45%;
+}
+
+.recomendation-card {
+  display: flex;
+  width: 100%;
+}
+
+card {
+  background-color: aquamarine;
+}
+
+.carousel {
+  margin: 10px;
 }

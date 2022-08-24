@@ -8,6 +8,7 @@ import FavoriteRecipes from './pages/FavoriteRecipes';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import RecipeDetails from './pages/RecipeDetails';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

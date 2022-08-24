@@ -17,7 +17,11 @@ function FoodsRecipes() {
             key={ strMeal }
             className="cards"
           >
-            <div key={ strMeal } data-testid={ `${index}-recipe-card` } className="card">
+            <div
+              key={ strMeal }
+              data-testid={ `${index}-recipe-card` }
+              className="recipe-card"
+            >
               <img
                 src={ strMealThumb }
                 alt=""

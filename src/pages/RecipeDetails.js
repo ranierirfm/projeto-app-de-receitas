@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
+import RecomendationCard from '../components/RecomendationCards';
 
 class RecipeDetails extends React.Component {
   constructor() {
@@ -69,7 +70,16 @@ class RecipeDetails extends React.Component {
     const { dataRecipeDetails, ingredients } = this.state;
     const { drinksRecipes } = this.context;
     const SIX = 6;
-    const drinkRecomendation = drinksRecipes.filter((_drink, index) => index < SIX);
+    const drinkRecomendation = drinksRecipes.filter((_drink, index) => index < SIX)
+      .map((drink) => {
+        const { strAlcoholic, strDrinkThumb, strDrink, idDrink } = drink;
+        return {
+          type: strAlcoholic,
+          thumb: strDrinkThumb,
+          name: strDrink,
+          id: idDrink,
+        };
+      });
 
     const ingredientsList = ingredients
       .filter((ingredient) => ingredient[0].includes('strIngredient'));
@@ -84,6 +94,7 @@ class RecipeDetails extends React.Component {
               src={ strMealThumb }
               alt="Product Recipe"
               data-testid="recipe-photo"
+              className="recipe-details-photo"
             />
             <h4 data-testid="recipe-title">{ strMeal }</h4>
             <p data-testid="recipe-category">{ strCategory }</p>
@@ -100,23 +111,7 @@ class RecipeDetails extends React.Component {
               width="450px"
               height="300px"
             />
-            {
-              drinkRecomendation
-                .map(({ strAlcoholic, strDrinkThumb, strDrink, idDrink }, index) => (
-                  <div
-                    key={ idDrink }
-                    data-testid={ `${index}-recomendation-card` }
-                  >
-                    <img
-                      src={ strDrinkThumb }
-                      alt="Recomendation Recipe"
-                      width="200px"
-                    />
-                    <p>{ strAlcoholic }</p>
-                    <h4>{ strDrink }</h4>
-                  </div>
-                ))
-            }
+            <RecomendationCard recomendation={ drinkRecomendation } />
           </div>
         ),
       );
@@ -126,7 +121,16 @@ class RecipeDetails extends React.Component {
     const { dataRecipeDetails, ingredients } = this.state;
     const { foodsRecipes } = this.context;
     const SIX = 6;
-    const foodRecomendation = foodsRecipes.filter((_food, index) => index < SIX);
+    const foodRecomendation = foodsRecipes.filter((_food, index) => index < SIX)
+      .map((food) => {
+        const { strCategory, strMealThumb, strMeal, idMeal } = food;
+        return {
+          type: strCategory,
+          thumb: strMealThumb,
+          name: strMeal,
+          id: idMeal,
+        };
+      });
 
     const ingredientsList = ingredients
       .filter((ingredient) => ingredient[0].includes('strIngredient'));
@@ -140,6 +144,7 @@ class RecipeDetails extends React.Component {
             src={ strDrinkThumb }
             alt="Product Recipe"
             data-testid="recipe-photo"
+            className="recipe-details-photo"
           />
           <h4 data-testid="recipe-title">{ strDrink }</h4>
           <p data-testid="recipe-category">{ strAlcoholic }</p>
@@ -149,23 +154,7 @@ class RecipeDetails extends React.Component {
             }
           </ul>
           <p data-testid="instructions">{ strInstructions }</p>
-          {
-            foodRecomendation
-              .map(({ strCategory, strMealThumb, strMeal, idMeal }, index) => (
-                <div
-                  key={ idMeal }
-                  data-testid={ `${index}-recomendation-card` }
-                >
-                  <img
-                    src={ strMealThumb }
-                    alt="Recomendation Recipe"
-                    width="200px"
-                  />
-                  <p>{ strCategory }</p>
-                  <h4>{ strMeal }</h4>
-                </div>
-              ))
-          }
+          <RecomendationCard recomendation={ foodRecomendation } />
         </div>
       ));
   };
