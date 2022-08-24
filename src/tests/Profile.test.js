@@ -2,7 +2,6 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 import App from '../App';
-
 import renderWithRouter from './helpers/renderWithRouter';
 
 test('Se a página Profile está presente e funcional', () => {
@@ -61,20 +60,36 @@ test('Se a página Profile está presente e funcional', () => {
 
   })
 
-  // test('Se o email do usuário aparece na tela', () => {
-  //   const { history } = renderWithRouter(<App />);
+  test('Se o email do usuário aparece na tela', () => {
+    const { history } = renderWithRouter(<App />);
 
-  //   history.push('/profile');
+    history.push('/profile');
 
-  // const  email = screen.getByRole("heading", { name: /\S+@\S+\.\S+/i });
-
-
-  //   expect(email).toBeDefined(); 
+  const  email = screen.getByTestId('profile-email');
 
 
-  // })
+    expect(email).toBeDefined(); 
 
 
+  })
 
 
+//   test('Se o email do usuário aparece na tela', () => {  
 
+//     const { history } = renderWithRouter(<App />);
+
+//     const emailInput = screen.getByRole('textbox'); 
+//     const passwordInput = screen.getByPlaceholderText(/digite sua senha/i);
+//     const submitButton = screen.getByRole('button', { name: /enter/i });
+
+//     fireEvent.change(emailInput, {target: {value: 'ranierirfm@hotmail.com'}})
+//     fireEvent.change(passwordInput, {target: {value: '12345678'}})
+//     fireEvent.click(submitButton)
+
+//     history.push('/profile');
+
+//     const  email = screen.getByTestId('profile-email');
+
+//     expect(email).toEqual('ranierirfm@hotmail.com');  
+
+// } )
