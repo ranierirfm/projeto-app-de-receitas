@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
+import StartRecipeButton from '../components/StartRecipeButton';
 
 class RecipeDetails extends React.Component {
   constructor() {
@@ -67,6 +68,7 @@ class RecipeDetails extends React.Component {
 
   showFoodDetails = () => {
     const { dataRecipeDetails, ingredients } = this.state;
+    const { match: { params: { id } } } = this.props;
     const { drinksRecipes } = this.context;
     const SIX = 6;
     const drinkRecomendation = drinksRecipes.filter((_drink, index) => index < SIX);
@@ -117,13 +119,7 @@ class RecipeDetails extends React.Component {
                   </div>
                 ))
             }
-            <button
-              type="button"
-              data-testid="start-recipe-btn"
-              className="start-recipe-button"
-            >
-              Start Recipe
-            </button>
+            <StartRecipeButton recipeId={ id } />
           </div>
         ),
       );
@@ -132,6 +128,7 @@ class RecipeDetails extends React.Component {
   showDrinkDetails = () => {
     const { dataRecipeDetails, ingredients } = this.state;
     const { foodsRecipes } = this.context;
+    const { match: { params: { id } } } = this.props;
     const SIX = 6;
     const foodRecomendation = foodsRecipes.filter((_food, index) => index < SIX);
 
@@ -174,13 +171,7 @@ class RecipeDetails extends React.Component {
                 </div>
               ))
           }
-          <button
-            type="button"
-            data-testid="start-recipe-btn"
-            className="start-recipe-button"
-          >
-            Start Recipe
-          </button>
+          <StartRecipeButton recipeId={ id } />
         </div>
       ));
   };
