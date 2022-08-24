@@ -69,6 +69,7 @@ class RecipeDetails extends React.Component {
   showFoodDetails = () => {
     const { dataRecipeDetails, ingredients } = this.state;
     const { match: { params: { id } } } = this.props;
+    const { match: { url } } = this.props;
     const { drinksRecipes } = this.context;
     const SIX = 6;
     const drinkRecomendation = drinksRecipes.filter((_drink, index) => index < SIX);
@@ -119,7 +120,7 @@ class RecipeDetails extends React.Component {
                   </div>
                 ))
             }
-            <StartRecipeButton recipeId={ id } />
+            <StartRecipeButton recipeId={ id } url={ url } />
           </div>
         ),
       );
@@ -129,6 +130,7 @@ class RecipeDetails extends React.Component {
     const { dataRecipeDetails, ingredients } = this.state;
     const { foodsRecipes } = this.context;
     const { match: { params: { id } } } = this.props;
+    const { match: { url } } = this.props;
     const SIX = 6;
     const foodRecomendation = foodsRecipes.filter((_food, index) => index < SIX);
 
@@ -171,7 +173,7 @@ class RecipeDetails extends React.Component {
                 </div>
               ))
           }
-          <StartRecipeButton recipeId={ id } />
+          <StartRecipeButton recipeId={ id } url={ url } />
         </div>
       ));
   };
