@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Carousel, CarouselItem } from 'react-bootstrap';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
 import RecomendationCard from '../components/RecomendationCards';
 
@@ -88,7 +89,9 @@ class RecipeDetails extends React.Component {
     const ingredientsMerged = this.ingredientsToMerge(ingredientsList, measureList);
     return dataRecipeDetails
       .map(
-        ({ idMeal, strMealThumb, strMeal, strCategory, strInstructions, strYoutube }) => (
+        ({
+          idMeal, strMealThumb, strMeal, strCategory, strInstructions, strYoutube,
+        }) => (
           <div key={ idMeal }>
             <img
               src={ strMealThumb }
@@ -111,7 +114,26 @@ class RecipeDetails extends React.Component {
               width="450px"
               height="300px"
             />
-            <RecomendationCard recomendation={ drinkRecomendation } />
+            <Carousel className="carousel" variant="dark" interval={ 10000 }>
+              <CarouselItem>
+                <div className="recomendation-card">
+                  {RecomendationCard(drinkRecomendation, '0')}
+                  {RecomendationCard(drinkRecomendation, '1')}
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="recomendation-card">
+                  {RecomendationCard(drinkRecomendation, '2')}
+                  {RecomendationCard(drinkRecomendation, '3')}
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="recomendation-card">
+                  {RecomendationCard(drinkRecomendation, '4')}
+                  {RecomendationCard(drinkRecomendation, '5')}
+                </div>
+              </CarouselItem>
+            </Carousel>
           </div>
         ),
       );
@@ -154,7 +176,26 @@ class RecipeDetails extends React.Component {
             }
           </ul>
           <p data-testid="instructions">{ strInstructions }</p>
-          <RecomendationCard recomendation={ foodRecomendation } />
+          <Carousel className="carousel" variant="dark" interval={ 10000 }>
+            <CarouselItem>
+              <div className="recomendation-card">
+                {RecomendationCard(foodRecomendation, '0')}
+                {RecomendationCard(foodRecomendation, '1')}
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="recomendation-card">
+                {RecomendationCard(foodRecomendation, '2')}
+                {RecomendationCard(foodRecomendation, '3')}
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="recomendation-card">
+                {RecomendationCard(foodRecomendation, '4')}
+                {RecomendationCard(foodRecomendation, '5')}
+              </div>
+            </CarouselItem>
+          </Carousel>
         </div>
       ));
   };
