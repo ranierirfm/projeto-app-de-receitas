@@ -14,7 +14,9 @@ function Profile(props) {
         <h1 className="profile-email" data-testid="profile-email">{emailParse.email}</h1>
       );
     }
-    (<h1 data-testid="profile-email">email</h1>);
+    return (
+      <h1 data-testid="profile-email">email</h1>
+    );
   };
 
   const handleLogout = () => {

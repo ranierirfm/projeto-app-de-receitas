@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Carousel, CarouselItem } from 'react-bootstrap';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
 import RecomendationCard from '../components/RecomendationCards';
+import StartRecipeButton from '../components/StartRecipeButton';
 
 class RecipeDetails extends React.Component {
   constructor() {
@@ -62,13 +63,15 @@ class RecipeDetails extends React.Component {
         key={ ingredient }
         data-testid={ `${index}-ingredient-name-and-measure` }
       >
-        { ingredient }
+        {ingredient}
       </li>
     ))
   )
 
   showFoodDetails = () => {
     const { dataRecipeDetails, ingredients } = this.state;
+    const { match: { params: { id } } } = this.props;
+    const { match: { url } } = this.props;
     const { drinksRecipes } = this.context;
     const SIX = 6;
     const drinkRecomendation = drinksRecipes.filter((_drink, index) => index < SIX)
@@ -99,14 +102,14 @@ class RecipeDetails extends React.Component {
               data-testid="recipe-photo"
               className="recipe-details-photo"
             />
-            <h4 data-testid="recipe-title">{ strMeal }</h4>
-            <p data-testid="recipe-category">{ strCategory }</p>
+            <h4 data-testid="recipe-title">{strMeal}</h4>
+            <p data-testid="recipe-category">{strCategory}</p>
             <ul>
               {
                 this.makeListIngredients(ingredientsMerged)
               }
             </ul>
-            <p data-testid="instructions">{ strInstructions }</p>
+            <p data-testid="instructions">{strInstructions}</p>
             <iframe
               data-testid="video"
               src={ strYoutube.replace('watch?v=', 'embed/') }
@@ -134,6 +137,7 @@ class RecipeDetails extends React.Component {
                 </div>
               </CarouselItem>
             </Carousel>
+            <StartRecipeButton recipeId={ id } url={ url } />
           </div>
         ),
       );
@@ -142,6 +146,8 @@ class RecipeDetails extends React.Component {
   showDrinkDetails = () => {
     const { dataRecipeDetails, ingredients } = this.state;
     const { foodsRecipes } = this.context;
+    const { match: { params: { id } } } = this.props;
+    const { match: { url } } = this.props;
     const SIX = 6;
     const foodRecomendation = foodsRecipes.filter((_food, index) => index < SIX)
       .map((food) => {
@@ -168,8 +174,8 @@ class RecipeDetails extends React.Component {
             data-testid="recipe-photo"
             className="recipe-details-photo"
           />
-          <h4 data-testid="recipe-title">{ strDrink }</h4>
-          <p data-testid="recipe-category">{ strAlcoholic }</p>
+          <h4 data-testid="recipe-title">{strDrink}</h4>
+          <p data-testid="recipe-category">{strAlcoholic}</p>
           <ul>
             {
               this.makeListIngredients(ingredientsMerged)
@@ -196,6 +202,7 @@ class RecipeDetails extends React.Component {
               </div>
             </CarouselItem>
           </Carousel>
+          <StartRecipeButton recipeId={ id } url={ url } />
         </div>
       ));
   };

@@ -78,3 +78,8 @@
 .carousel {
   margin: 10px;
 }
+
+.progress-recipe {
+  bottom: 0%;
+  position: fixed;
+}
