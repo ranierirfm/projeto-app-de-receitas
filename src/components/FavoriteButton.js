@@ -1,6 +1,7 @@
 import React from 'react';
 
 function FavoriteButton() {
+  console.log('a');
   return (
     <button
       type="button"
