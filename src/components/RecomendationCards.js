@@ -20,7 +20,7 @@ function RecomendationCard({ recomendation }) {
           className="d-block w-100"
         />
         <p>{ type }</p>
-        <h4>{ name }</h4>
+        <h4 data-testid={ `${index}-recomendation-title` }>{ name }</h4>
       </Card>
     );
   };
