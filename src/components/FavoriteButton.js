@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { addFavoriteStorage } from '../services/favoriteStorage';
 
 function FavoriteButton(props) {
-  console.log(props.dataRecipe);
-
   const addFavoriteRecipe = () => {
     const { dataRecipe, url } = props;
 
@@ -21,8 +19,6 @@ function FavoriteButton(props) {
     console.log('clicou');
   };
 
-function FavoriteButton() {
-  // console.log(props.dataRecipe);
   return (
     <button
       type="button"
