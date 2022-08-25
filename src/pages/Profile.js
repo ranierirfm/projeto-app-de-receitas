@@ -10,7 +10,9 @@ function Profile(props) {
     const email = localStorage.getItem('user');
     const emailParse = JSON.parse(email);
     if (emailParse !== null) {
-      return (<h1 data-testid="profile-email">{emailParse.email}</h1>);
+      return (
+        <h1 className="profile-email" data-testid="profile-email">{emailParse.email}</h1>
+      );
     }
     return (
       <h1 data-testid="profile-email">email</h1>
@@ -25,39 +27,34 @@ function Profile(props) {
   return (
     <>
       <Header history={ history } />
-      <p>Página de Perfil</p>
-      { getEmail() }
 
-      <button
-        type="button"
-        data-testid="profile-done-btn"
-        id="Done Recipes"
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Done Recipes
-
-      </button>
-
-      <button
-        type="button"
-        data-testid="profile-favorite-btn"
-        id="Favorite Recipes"
-        onClick={ () => history.push('/favorite-recipes') }
-
-      >
-        Favorite Recipes
-
-      </button>
-
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        id="Logout"
-        onClick={ handleLogout }
-      >
-        Logout
-
-      </button>
+      <section className="profile-container">
+        { getEmail() }
+        <button
+          type="button"
+          data-testid="profile-done-btn"
+          id="Done Recipes"
+          onClick={ () => history.push('/done-recipes') }
+        >
+          Done Recipes
+        </button>
+        <button
+          type="button"
+          data-testid="profile-favorite-btn"
+          id="Favorite Recipes"
+          onClick={ () => history.push('/favorite-recipes') }
+        >
+          Favorite Recipes
+        </button>
+        <button
+          type="button"
+          data-testid="profile-logout-btn"
+          id="Logout"
+          onClick={ handleLogout }
+        >
+          Logout
+        </button>
+      </section>
 
       <Footer />
     </>

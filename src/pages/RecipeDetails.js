@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Carousel, CarouselItem } from 'react-bootstrap';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
+import RecomendationCard from '../components/RecomendationCards';
 import StartRecipeButton from '../components/StartRecipeButton';
 
 class RecipeDetails extends React.Component {
@@ -72,7 +74,16 @@ class RecipeDetails extends React.Component {
     const { match: { url } } = this.props;
     const { drinksRecipes } = this.context;
     const SIX = 6;
-    const drinkRecomendation = drinksRecipes.filter((_drink, index) => index < SIX);
+    const drinkRecomendation = drinksRecipes.filter((_drink, index) => index < SIX)
+      .map((drink) => {
+        const { strAlcoholic, strDrinkThumb, strDrink, idDrink } = drink;
+        return {
+          type: strAlcoholic,
+          thumb: strDrinkThumb,
+          name: strDrink,
+          id: idDrink,
+        };
+      });
 
     const ingredientsList = ingredients
       .filter((ingredient) => ingredient[0].includes('strIngredient'));
@@ -81,12 +92,15 @@ class RecipeDetails extends React.Component {
     const ingredientsMerged = this.ingredientsToMerge(ingredientsList, measureList);
     return dataRecipeDetails
       .map(
-        ({ idMeal, strMealThumb, strMeal, strCategory, strInstructions, strYoutube }) => (
+        ({
+          idMeal, strMealThumb, strMeal, strCategory, strInstructions, strYoutube,
+        }) => (
           <div key={ idMeal }>
             <img
               src={ strMealThumb }
               alt="Product Recipe"
               data-testid="recipe-photo"
+              className="recipe-details-photo"
             />
             <h4 data-testid="recipe-title">{strMeal}</h4>
             <p data-testid="recipe-category">{strCategory}</p>
@@ -103,23 +117,26 @@ class RecipeDetails extends React.Component {
               width="450px"
               height="300px"
             />
-            {
-              drinkRecomendation
-                .map(({ strAlcoholic, strDrinkThumb, strDrink, idDrink }, index) => (
-                  <div
-                    key={ idDrink }
-                    data-testid={ `${index}-recomendation-card` }
-                  >
-                    <img
-                      src={ strDrinkThumb }
-                      alt="Recomendation Recipe"
-                      width="200px"
-                    />
-                    <p>{strAlcoholic}</p>
-                    <h4 data-testid={ `${index}-recomendation-title` }>{strDrink}</h4>
-                  </div>
-                ))
-            }
+            <Carousel className="carousel" variant="dark" interval={ 10000 }>
+              <CarouselItem>
+                <div className="recomendation-card">
+                  {RecomendationCard(drinkRecomendation, '0')}
+                  {RecomendationCard(drinkRecomendation, '1')}
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="recomendation-card">
+                  {RecomendationCard(drinkRecomendation, '2')}
+                  {RecomendationCard(drinkRecomendation, '3')}
+                </div>
+              </CarouselItem>
+              <CarouselItem>
+                <div className="recomendation-card">
+                  {RecomendationCard(drinkRecomendation, '4')}
+                  {RecomendationCard(drinkRecomendation, '5')}
+                </div>
+              </CarouselItem>
+            </Carousel>
             <StartRecipeButton recipeId={ id } url={ url } />
           </div>
         ),
@@ -132,7 +149,16 @@ class RecipeDetails extends React.Component {
     const { match: { params: { id } } } = this.props;
     const { match: { url } } = this.props;
     const SIX = 6;
-    const foodRecomendation = foodsRecipes.filter((_food, index) => index < SIX);
+    const foodRecomendation = foodsRecipes.filter((_food, index) => index < SIX)
+      .map((food) => {
+        const { strCategory, strMealThumb, strMeal, idMeal } = food;
+        return {
+          type: strCategory,
+          thumb: strMealThumb,
+          name: strMeal,
+          id: idMeal,
+        };
+      });
 
     const ingredientsList = ingredients
       .filter((ingredient) => ingredient[0].includes('strIngredient'));
@@ -146,6 +172,7 @@ class RecipeDetails extends React.Component {
             src={ strDrinkThumb }
             alt="Product Recipe"
             data-testid="recipe-photo"
+            className="recipe-details-photo"
           />
           <h4 data-testid="recipe-title">{strDrink}</h4>
           <p data-testid="recipe-category">{strAlcoholic}</p>
@@ -154,25 +181,27 @@ class RecipeDetails extends React.Component {
               this.makeListIngredients(ingredientsMerged)
             }
           </ul>
-          <p data-testid="instructions">{strInstructions}</p>
-          {
-            foodRecomendation
-              .map(({ strCategory, strMealThumb, strMeal, idMeal }, index) => (
-                <div
-                  key={ idMeal }
-                  data-testid={ `${index}-recomendation-card` }
-                >
-                  <img
-                    src={ strMealThumb }
-                    alt="Recomendation Recipe"
-                    width="300px"
-                    heigth="100px"
-                  />
-                  <p>{strCategory}</p>
-                  <h4 data-testid={ `${index}-recomendation-title` }>{strMeal}</h4>
-                </div>
-              ))
-          }
+          <p data-testid="instructions">{ strInstructions }</p>
+          <Carousel className="carousel" variant="dark" interval={ 10000 }>
+            <CarouselItem>
+              <div className="recomendation-card">
+                {RecomendationCard(foodRecomendation, '0')}
+                {RecomendationCard(foodRecomendation, '1')}
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="recomendation-card">
+                {RecomendationCard(foodRecomendation, '2')}
+                {RecomendationCard(foodRecomendation, '3')}
+              </div>
+            </CarouselItem>
+            <CarouselItem>
+              <div className="recomendation-card">
+                {RecomendationCard(foodRecomendation, '4')}
+                {RecomendationCard(foodRecomendation, '5')}
+              </div>
+            </CarouselItem>
+          </Carousel>
           <StartRecipeButton recipeId={ id } url={ url } />
         </div>
       ));

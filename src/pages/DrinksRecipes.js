@@ -15,8 +15,13 @@ function DrinksRecipes() {
           <Link
             to={ `drinks/${idDrink}` }
             key={ strDrink }
+            className="cards"
           >
-            <div key={ strDrink } data-testid={ `${index}-recipe-card` } className="card">
+            <div
+              key={ strDrink }
+              data-testid={ `${index}-recipe-card` }
+              className="recipe-card"
+            >
               <img
                 src={ strDrinkThumb }
                 alt=""
