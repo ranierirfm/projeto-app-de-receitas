@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function StartRecipeButton(props) {
   const [recipeDone, setRecipeDone] = useState(false);
   const [inProgressRecipe, setInProgressRecipe] = useState(false);
   const { recipeId, url } = props;
+  console.log(url);
 
   useEffect(() => {
     const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -26,25 +28,32 @@ function StartRecipeButton(props) {
   });
 
   const startRecipe = (
-    <button
-      type="button"
-      data-testid="start-recipe-btn"
-      className="progress-recipe"
+    <Link
+      to={ `${url}/in-progress` }
     >
-      Start Recipe
-    </button>);
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className="progress-recipe"
+      >
+        Start Recipe
+      </button>
+    </Link>
+  );
 
   const progressRecipe = (
-    <button
-      type="button"
-      data-testid="start-recipe-btn"
-      className="progress-recipe"
+    <Link
+      to={ `${url}/in-progress` }
     >
-      Continue Recipe
-    </button>);
-
-  // const isDone = !recipeDone ? startRecipe : null;
-  // const inProgress = inProgressRecipe ? progressRecipe : null;
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        className="progress-recipe"
+      >
+        Continue Recipe
+      </button>
+    </Link>
+  );
 
   const showButton = () => {
     if (inProgressRecipe) return progressRecipe;
