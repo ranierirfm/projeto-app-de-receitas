@@ -97,7 +97,7 @@ class RecipeDetails extends React.Component {
         ({
           idMeal, strMealThumb, strMeal, strCategory, strInstructions, strYoutube,
         }) => (
-          <div key={ idMeal }>
+          <div key={ idMeal } className="details-page">
             <img
               src={ strMealThumb }
               alt="Product Recipe"
@@ -173,7 +173,7 @@ class RecipeDetails extends React.Component {
     const ingredientsMerged = this.ingredientsToMerge(ingredientsList, measureList);
     return dataRecipeDetails
       .map(({ idDrink, strDrinkThumb, strDrink, strAlcoholic, strInstructions }) => (
-        <div key={ idDrink }>
+        <div key={ idDrink } className="details-page">
           <img
             src={ strDrinkThumb }
             alt="Product Recipe"
