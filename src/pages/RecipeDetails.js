@@ -105,7 +105,7 @@ class RecipeDetails extends React.Component {
               className="recipe-details-photo"
             />
             <div>
-              <FavoriteButton />
+              <FavoriteButton dataRecipe={ dataRecipeDetails[0] } url={ url } />
               <ShareButton url={ url } />
             </div>
             <h4 data-testid="recipe-title">{strMeal}</h4>
@@ -181,7 +181,7 @@ class RecipeDetails extends React.Component {
             className="recipe-details-photo"
           />
           <div>
-            <FavoriteButton />
+            <FavoriteButton dataRecipe={ dataRecipeDetails[0] } url={ url } />
             <ShareButton url={ url } />
           </div>
           <h4 data-testid="recipe-title">{strDrink}</h4>

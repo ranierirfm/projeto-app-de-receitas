@@ -8,7 +8,6 @@ function ShareButton(props) {
   const copyUrl = () => {
     const { url } = props;
     clipboardCopy(`http://localhost:3000${url}`);
-    console.log(`http://localhost:3000${url}`);
     setIsCopied(true);
   };
 
