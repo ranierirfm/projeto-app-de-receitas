@@ -4,6 +4,8 @@ import { Carousel, CarouselItem } from 'react-bootstrap';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
 import RecomendationCard from '../components/RecomendationCards';
 import StartRecipeButton from '../components/StartRecipeButton';
+import ShareButton from '../components/ShareButton';
+import FavoriteButton from '../components/FavoriteButton';
 
 class RecipeDetails extends React.Component {
   constructor() {
@@ -95,13 +97,17 @@ class RecipeDetails extends React.Component {
         ({
           idMeal, strMealThumb, strMeal, strCategory, strInstructions, strYoutube,
         }) => (
-          <div key={ idMeal }>
+          <div key={ idMeal } className="details-page">
             <img
               src={ strMealThumb }
               alt="Product Recipe"
               data-testid="recipe-photo"
               className="recipe-details-photo"
             />
+            <div>
+              <ShareButton />
+              <FavoriteButton />
+            </div>
             <h4 data-testid="recipe-title">{strMeal}</h4>
             <p data-testid="recipe-category">{strCategory}</p>
             <ul>
@@ -167,13 +173,17 @@ class RecipeDetails extends React.Component {
     const ingredientsMerged = this.ingredientsToMerge(ingredientsList, measureList);
     return dataRecipeDetails
       .map(({ idDrink, strDrinkThumb, strDrink, strAlcoholic, strInstructions }) => (
-        <div key={ idDrink }>
+        <div key={ idDrink } className="details-page">
           <img
             src={ strDrinkThumb }
             alt="Product Recipe"
             data-testid="recipe-photo"
             className="recipe-details-photo"
           />
+          <div>
+            <ShareButton />
+            <FavoriteButton />
+          </div>
           <h4 data-testid="recipe-title">{strDrink}</h4>
           <p data-testid="recipe-category">{strAlcoholic}</p>
           <ul>
