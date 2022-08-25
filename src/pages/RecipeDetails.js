@@ -4,6 +4,8 @@ import { Carousel, CarouselItem } from 'react-bootstrap';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
 import RecomendationCard from '../components/RecomendationCards';
 import StartRecipeButton from '../components/StartRecipeButton';
+import ShareButton from '../components/ShareButton';
+import FavoriteButton from '../components/FavoriteButton';
 
 class RecipeDetails extends React.Component {
   constructor() {
@@ -102,6 +104,10 @@ class RecipeDetails extends React.Component {
               data-testid="recipe-photo"
               className="recipe-details-photo"
             />
+            <div>
+              <ShareButton />
+              <FavoriteButton />
+            </div>
             <h4 data-testid="recipe-title">{strMeal}</h4>
             <p data-testid="recipe-category">{strCategory}</p>
             <ul>
@@ -174,6 +180,10 @@ class RecipeDetails extends React.Component {
             data-testid="recipe-photo"
             className="recipe-details-photo"
           />
+          <div>
+            <ShareButton />
+            <FavoriteButton />
+          </div>
           <h4 data-testid="recipe-title">{strDrink}</h4>
           <p data-testid="recipe-category">{strAlcoholic}</p>
           <ul>
