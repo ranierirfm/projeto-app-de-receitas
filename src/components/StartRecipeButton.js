@@ -5,7 +5,6 @@ function StartRecipeButton(props) {
   const [recipeDone, setRecipeDone] = useState(false);
   const [inProgressRecipe, setInProgressRecipe] = useState(false);
   const { recipeId, url } = props;
-  console.log(url);
 
   useEffect(() => {
     const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
