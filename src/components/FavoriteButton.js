@@ -1,6 +1,7 @@
 import React from 'react';
 
 function FavoriteButton() {
+  // console.log(props.dataRecipe);
   return (
     <button
       type="button"
