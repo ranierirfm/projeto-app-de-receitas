@@ -1,6 +1,5 @@
 import PropTypes, { object } from 'prop-types';
 import React from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -17,28 +16,27 @@ function FavoriteRecipes(props) {
           { id, type, category, image, name }, i,
         ) => (
           <div key={ id }>
-            <Link to={ `/${type}s/${id}` }>
-              <img
-                data-testid={ `${i}-horizontal-image` }
-                src={ image }
-                alt={ name }
-                width="200px"
-                height="200px"
-              />
-              <div>
-                <p
-                  data-testid={ `${i}-horizontal-top-text` }
-                >
-                  {`${type} - ${category}`}
-                </p>
-                <br />
-                <p
-                  data-testid={ `${i}-horizontal-name` }
-                >
-                  { name }
-                </p>
-              </div>
-            </Link>
+            <img
+              data-testid={ `${i}-horizontal-image` }
+              src={ image }
+              alt={ name }
+              width="200px"
+              height="200px"
+            />
+            <div>
+              <p
+                data-testid={ `${i}-horizontal-top-text` }
+              >
+                {`${type} - ${category}`}
+              </p>
+              <br />
+              <p
+                data-testid={ `${i}-horizontal-name` }
+              >
+                { name }
+              </p>
+            </div>
+
             <div>
               <button
                 src={ shareIcon }
