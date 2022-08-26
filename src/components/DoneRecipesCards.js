@@ -30,16 +30,19 @@ class DoneRecipesCard extends React.Component {
         doneDate: '23/06/2020',
         tags: [],
       }],
+      isCopied: false,
     };
   }
 
-  copyUrl = () => {
-    const { id, type } = this.state;
+  copyUrl = (type, id) => {
     clipboardCopy(`http://localhost:3000${`/${type}s/${id}`}`);
+    this.setState({
+      isCopied: true,
+    });
   };
 
   createCard = () => {
-    const { recipes } = this.state;
+    const { recipes, isCopied } = this.state;
 
     return recipes.map((recipe, index) => {
       const {
@@ -62,9 +65,6 @@ class DoneRecipesCard extends React.Component {
             {' '}
             {doneDate}
           </p>
-          {/* <div data-testid={ `${index}-horizontal-share-btn` }>
-            <ShareButton />
-          </div> */}
           <label htmlFor="share-icon">
             <input
               type="image"
@@ -72,8 +72,9 @@ class DoneRecipesCard extends React.Component {
               alt="Share Icon"
               name="share-icon"
               data-testid={ `${index}-horizontal-share-btn` }
-              onClick={ this.copyUrl }
+              onClick={ () => this.copyUrl(type, id) }
             />
+            { isCopied && <p>Link copied!</p> }
           </label>
           {type === 'food' && (tags.length === 1 ? (
             <div>
