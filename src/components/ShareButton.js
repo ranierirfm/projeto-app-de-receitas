@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import clipboardCopy from 'clipboard-copy';
+import shareIcon from '../images/shareIcon.svg';
 
 function ShareButton(props) {
   const [isCopied, setIsCopied] = useState(false);
@@ -18,7 +19,10 @@ function ShareButton(props) {
         data-testid="share-btn"
         onClick={ copyUrl }
       >
-        Compartilhar
+        <img
+          src={ shareIcon }
+          alt="Share Icon"
+        />
       </button>
       { isCopied && <p>Link copied!</p> }
     </>

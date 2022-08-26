@@ -1,11 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { addFavoriteStorage } from '../services/favoriteStorage';
+import { connect } from 'react-redux';
+import { addFavoriteStorage, getFavoriteStorage } from '../services/favoriteStorage';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import { toggleFavoriteAction } from '../redux/actions/myActions';
 
 function FavoriteButton(props) {
-  const addFavoriteRecipe = () => {
-    const { dataRecipe, url } = props;
+  const { dataRecipe, url, id, isFavorite, toggleFavorite } = props;
+  useEffect(() => {
+    const getFavorites = getFavoriteStorage();
+    return getFavorites
+      .some((favoriteRecipe) => favoriteRecipe.id === id) && toggleFavorite();
+  }, []);
 
+  const addFavoriteRecipe = () => {
     const recipeToAdd = {
       id: url.includes('foods') ? dataRecipe.idMeal : dataRecipe.idDrink,
       type: url.includes('foods') ? 'food' : 'drink',
@@ -16,7 +25,6 @@ function FavoriteButton(props) {
       image: url.includes('foods') ? dataRecipe.strMealThumb : dataRecipe.strDrinkThumb,
     };
     addFavoriteStorage(recipeToAdd);
-    console.log('clicou');
   };
 
   return (
@@ -24,16 +32,31 @@ function FavoriteButton(props) {
       type="button"
       data-testid="favorite-btn"
       onClick={ addFavoriteRecipe }
+      src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
     >
-      Favoritar
+      <img
+        src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
+        alt="Favorite Icon"
+      />
     </button>
   );
 }
 
 FavoriteButton.propTypes = {
+  isFavorite: PropTypes.bool.isRequired,
+  toggleFavorite: PropTypes.func.isRequired,
   url: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
   dataRecipe: PropTypes.shape(PropTypes.string.isRequired)
     .isRequired,
 };
 
-export default FavoriteButton;
+const mapStateToProps = (store) => ({
+  isFavorite: store.myReducer.isFavorite,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  toggleFavorite: () => dispatch(toggleFavoriteAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoriteButton);
