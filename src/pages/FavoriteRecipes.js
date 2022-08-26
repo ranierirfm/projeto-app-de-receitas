@@ -1,14 +1,16 @@
 import PropTypes, { object } from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import { getFavoriteStorage, saveFavoriteStorage } from '../services/favoriteStorage';
 
 function FavoriteRecipes(props) {
   const { history } = props;
 
   const [transfArea, settransfArea] = useState(false);
+  const [update, setupdate] = useState(false);
 
   const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
@@ -30,6 +32,14 @@ function FavoriteRecipes(props) {
             settransfArea(true);
           }
 
+          const removeFavoriteRecipe = () => {
+            const getFavorites = getFavoriteStorage();
+            const updatedRecipe = getFavorites
+              .filter((favoriteRecipe) => favoriteRecipe.id !== id);
+            console.log(getFavorites);
+            saveFavoriteStorage(updatedRecipe);
+            setupdate(!update);
+          };
           return (
 
             <div key={ id }>
@@ -81,7 +91,7 @@ function FavoriteRecipes(props) {
                   data-testid={ `${i}-horizontal-favorite-btn` }
                   type="button"
                   src={ blackHeartIcon }
-
+                  onClick={ removeFavoriteRecipe }
                 >
                   <img
                     src={ blackHeartIcon }
@@ -94,6 +104,10 @@ function FavoriteRecipes(props) {
         }));
     }
   }
+
+  useEffect(() => {
+    filterRecipes();
+  }, [update]);
 
   return (
     <>
