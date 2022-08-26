@@ -1,12 +1,11 @@
-import { findByTestId, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import React from 'react';
 import App from '../App';
-import renderWithRouter from './helpers/renderWithRouter';
+import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 
 describe('Testindo Recipe Details page', () => {
   test('Testing if all elements are present on the screen in the food page', async () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/foods/52977');
+    renderWithRouterAndRedux(<App />, { initialEntries: ['/foods/52977'] });
 
     const imageRecipe = await screen.findByRole("img", { name: /product recipe/i });
     const titleRecipe = await screen.findByRole("heading", { name: /corba/i });
@@ -26,8 +25,7 @@ describe('Testindo Recipe Details page', () => {
 
   })
   test('Testing if all elements are present on the screen in the drink page', async () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/drinks/15997');
+    renderWithRouterAndRedux(<App />, { initialEntries: ['/drinks/15997'] });
 
     const imageRecipe = await screen.findByRole("img", { name: /product recipe/i });
     const titleRecipe = await screen.findByRole("heading", { name: /gg/i });
