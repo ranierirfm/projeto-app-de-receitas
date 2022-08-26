@@ -7,7 +7,7 @@ const INITIAL_STATE = {
 function myReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
   case TOGGLE_FAVORITE_ACTION:
-    return { ...state, isFavorite: !state.isFavorite };
+    return { ...state, isFavorite: action.payload };
   default:
     return state;
   }

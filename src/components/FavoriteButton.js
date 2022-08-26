@@ -12,10 +12,15 @@ import {
 
 function FavoriteButton(props) {
   const { dataRecipe, url, id, isFavorite, toggleFavorite } = props;
+  console.log(id, isFavorite);
   useEffect(() => {
     const getFavorites = getFavoriteStorage();
-    return getFavorites
-      .some((favoriteRecipe) => favoriteRecipe.id === id) && toggleFavorite();
+    if (getFavorites) {
+      console.log('a');
+      return getFavorites
+        .some((favoriteRecipe) => favoriteRecipe.id === id)
+        ? toggleFavorite(true) : toggleFavorite(false);
+    }
   }, []);
 
   const addFavoriteRecipe = () => {
@@ -29,7 +34,7 @@ function FavoriteButton(props) {
       image: url.includes('foods') ? dataRecipe.strMealThumb : dataRecipe.strDrinkThumb,
     };
     addFavoriteStorage(recipeToAdd);
-    toggleFavorite();
+    toggleFavorite(true);
   };
 
   const removeFavoriteRecipe = () => {
@@ -37,7 +42,7 @@ function FavoriteButton(props) {
     const updatedRecipe = getFavorites
       .filter((favoriteRecipe) => favoriteRecipe.id !== id);
     saveFavoriteStorage(updatedRecipe);
-    toggleFavorite();
+    toggleFavorite(false);
   };
 
   return (
@@ -69,7 +74,7 @@ const mapStateToProps = (store) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toggleFavorite: () => dispatch(toggleFavoriteAction()),
+  toggleFavorite: (payload) => dispatch(toggleFavoriteAction(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FavoriteButton);
