@@ -94,10 +94,12 @@ function FavoriteRecipes(props) {
           data-testid="filter-by-all-btn"
           type="button"
           value="All"
+          className="btn btn-primary"
         >
           All
         </button>
         <button
+          className="btn btn-primary"
           data-testid="filter-by-food-btn"
           type="button"
           value="Food"
@@ -105,6 +107,7 @@ function FavoriteRecipes(props) {
           Food
         </button>
         <button
+          className="btn btn-primary"
           data-testid="filter-by-drink-btn"
           type="button"
           value="Drinks"
