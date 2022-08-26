@@ -69,7 +69,7 @@ function Header(props) {
         </label>
       </section>
       <div>
-        {toggle ? <SearchBar /> : ''}
+        {toggle ? <SearchBar url={ pathname } /> : ''}
       </div>
     </header>
   );
