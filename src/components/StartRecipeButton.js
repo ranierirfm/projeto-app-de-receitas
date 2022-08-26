@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
@@ -33,7 +34,7 @@ function StartRecipeButton(props) {
       <button
         type="button"
         data-testid="start-recipe-btn"
-        className="progress-recipe"
+        className="progress-recipe btn btn-success"
       >
         Start Recipe
       </button>
@@ -47,7 +48,7 @@ function StartRecipeButton(props) {
       <button
         type="button"
         data-testid="start-recipe-btn"
-        className="progress-recipe"
+        className="progress-recipe btn btn-info"
       >
         Continue Recipe
       </button>

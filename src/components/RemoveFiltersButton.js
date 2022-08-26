@@ -18,6 +18,7 @@ function RemoveFilterButton() {
     <button
       type="button"
       data-testid="All-category-filter"
+      className="btn btn-secondary"
       onClick={ removeAllFilters }
     >
       All

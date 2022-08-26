@@ -77,12 +77,14 @@
 
 .carousel {
   margin: 10px;
-  margin-left: 100px;
-  width: 80%;
+
+  /* margin-left: 100px;
+  width: 80%; */
 
 }
 
 .progress-recipe {
-  bottom: 0%;
+  bottom: 0;
   position: fixed;
+  z-index: 100;
 }
