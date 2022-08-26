@@ -12,7 +12,6 @@ import {
 
 function FavoriteButton(props) {
   const { dataRecipe, url, id, isFavorite, toggleFavorite } = props;
-  console.log(id, isFavorite);
   useEffect(() => {
     const getFavorites = getFavoriteStorage();
     if (getFavorites) {
@@ -20,6 +19,7 @@ function FavoriteButton(props) {
         .some((favoriteRecipe) => favoriteRecipe.id === id)
         ? toggleFavorite(true) : toggleFavorite(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const addFavoriteRecipe = () => {

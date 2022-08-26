@@ -120,8 +120,8 @@ class RecipeDetails extends React.Component {
               data-testid="video"
               src={ strYoutube.replace('watch?v=', 'embed/') }
               title="Recipe Video"
-              width="450px"
-              height="300px"
+              width="360px"
+              height="200px"
             />
             <Carousel className="carousel" variant="dark" interval={ 10000 }>
               <CarouselItem>

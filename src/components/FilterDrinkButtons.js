@@ -25,6 +25,7 @@ function FilterDrinkButtons() {
           <button
             key={ strCategory }
             type="button"
+            className="btn btn-primary"
             data-testid={ `${strCategory}-category-filter` }
             id={ strCategory }
             onClick={ selectFilter }
