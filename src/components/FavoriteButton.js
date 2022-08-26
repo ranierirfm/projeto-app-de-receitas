@@ -16,7 +16,6 @@ function FavoriteButton(props) {
   useEffect(() => {
     const getFavorites = getFavoriteStorage();
     if (getFavorites) {
-      console.log('a');
       return getFavorites
         .some((favoriteRecipe) => favoriteRecipe.id === id)
         ? toggleFavorite(true) : toggleFavorite(false);
