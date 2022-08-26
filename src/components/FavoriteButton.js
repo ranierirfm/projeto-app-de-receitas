@@ -1,10 +1,14 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addFavoriteStorage, getFavoriteStorage } from '../services/favoriteStorage';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import { toggleFavoriteAction } from '../redux/actions/myActions';
+import {
+  addFavoriteStorage,
+  getFavoriteStorage,
+  saveFavoriteStorage,
+} from '../services/favoriteStorage';
 
 function FavoriteButton(props) {
   const { dataRecipe, url, id, isFavorite, toggleFavorite } = props;
@@ -25,13 +29,22 @@ function FavoriteButton(props) {
       image: url.includes('foods') ? dataRecipe.strMealThumb : dataRecipe.strDrinkThumb,
     };
     addFavoriteStorage(recipeToAdd);
+    toggleFavorite();
+  };
+
+  const removeFavoriteRecipe = () => {
+    const getFavorites = getFavoriteStorage();
+    const updatedRecipe = getFavorites
+      .filter((favoriteRecipe) => favoriteRecipe.id !== id);
+    saveFavoriteStorage(updatedRecipe);
+    toggleFavorite();
   };
 
   return (
     <button
       type="button"
       data-testid="favorite-btn"
-      onClick={ addFavoriteRecipe }
+      onClick={ isFavorite ? removeFavoriteRecipe : addFavoriteRecipe }
       src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
     >
       <img
