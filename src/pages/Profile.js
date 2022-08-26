@@ -32,6 +32,7 @@ function Profile(props) {
         { getEmail() }
         <button
           type="button"
+          className="btn btn-primary"
           data-testid="profile-done-btn"
           id="Done Recipes"
           onClick={ () => history.push('/done-recipes') }
@@ -40,6 +41,7 @@ function Profile(props) {
         </button>
         <button
           type="button"
+          className="btn btn-primary"
           data-testid="profile-favorite-btn"
           id="Favorite Recipes"
           onClick={ () => history.push('/favorite-recipes') }
@@ -48,6 +50,7 @@ function Profile(props) {
         </button>
         <button
           type="button"
+          className="btn btn-primary"
           data-testid="profile-logout-btn"
           id="Logout"
           onClick={ handleLogout }
