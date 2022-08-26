@@ -1,8 +1,8 @@
 import PropTypes, { object } from 'prop-types';
 import React from 'react';
 import Header from '../components/Header';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 function FavoriteRecipes(props) {
   const { history } = props;
@@ -13,21 +13,21 @@ function FavoriteRecipes(props) {
     if (favRecipes !== null || favRecipes.length !== 0) {
       return (
         favRecipes.map((
-          { id, type, category, image, name }, i,
+          { id, nationality, category, image, name }, i,
         ) => (
           <div key={ id }>
             <img
               data-testid={ `${i}-horizontal-image` }
               src={ image }
               alt={ name }
-              width="200px"
-              height="200px"
+              width="15px"
+              height="150px"
             />
             <div>
               <p
                 data-testid={ `${i}-horizontal-top-text` }
               >
-                {`${type} - ${category}`}
+                {`${nationality} - ${category}`}
               </p>
               <br />
               <p
@@ -48,7 +48,7 @@ function FavoriteRecipes(props) {
               <button
                 data-testid={ `${i}-horizontal-favorite-btn` }
                 type="button"
-                src={ whiteHeartIcon }
+                src={ blackHeartIcon }
               >
                 Desfavoritar
               </button>
