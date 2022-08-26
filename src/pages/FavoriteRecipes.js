@@ -1,14 +1,16 @@
 import PropTypes, { object } from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import { getFavoriteStorage, saveFavoriteStorage } from '../services/favoriteStorage';
 
 function FavoriteRecipes(props) {
   const { history } = props;
 
   const [transfArea, settransfArea] = useState(false);
+  const [update, setupdate] = useState(false);
 
   const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
@@ -22,72 +24,94 @@ function FavoriteRecipes(props) {
     if (favRecipes !== null || favRecipes.length !== 0) {
       return (
         favRecipes.map((
-          { id, nationality, category, type, image, name }, i,
-        ) => (
-          <div key={ id }>
-            <Link to={ `/${type}s/${id}` }>
-              <img
-                data-testid={ `${i}-horizontal-image` }
-                src={ image }
-                alt={ name }
-                width="150px"
-                height="150px"
-              />
-            </Link>
-            <div>
-              <p
-                data-testid={ `${i}-horizontal-top-text` }
-              >
-                {`${nationality} - ${category}`}
-              </p>
-              <br />
-              <Link to={ `/${type}s/${id}` }>
-                <p
-                  data-testid={ `${i}-horizontal-name` }
-                >
-                  { name }
-                </p>
-              </Link>
-            </div>
+          { id, nationality, category, alcoholicOrNot, type, image, name }, i,
+        ) => {
+          function copyUrl() {
+            navigator.clipboard
+              .writeText(`${window.location.origin}/${type}s/${id}`);
+            settransfArea(true);
+          }
 
-            <div>
-              <button
-                src={ shareIcon }
-                type="button"
-                data-testid={ `${i}-horizontal-share-btn` }
-                onClick={ () => {
-                  navigator.clipboard
-                    .writeText(`${window.location.origin}/${type}s/${id}`);
-                  settransfArea(true);
-                } }
-              >
+          const removeFavoriteRecipe = () => {
+            const getFavorites = getFavoriteStorage();
+            const updatedRecipe = getFavorites
+              .filter((favoriteRecipe) => favoriteRecipe.id !== id);
+            console.log(getFavorites);
+            saveFavoriteStorage(updatedRecipe);
+            setupdate(!update);
+          };
+          return (
+
+            <div key={ id }>
+              <Link to={ `/${type}s/${id}` }>
                 <img
+                  data-testid={ `${i}-horizontal-image` }
+                  src={ image }
+                  alt={ name }
+                  width="150px"
+                  height="150px"
+                />
+              </Link>
+              <div>
+                <p
+                  data-testid="1-horizontal-top-text"
+                >
+                  { alcoholicOrNot }
+
+                </p>
+                <p
+                  data-testid={ `${i}-horizontal-top-text` }
+                >
+                  {`${nationality} - ${category}`}
+                </p>
+                <br />
+                <Link to={ `/${type}s/${id}` }>
+                  <p
+                    data-testid={ `${i}-horizontal-name` }
+                  >
+                    { name }
+                  </p>
+                </Link>
+              </div>
+
+              <div>
+                <button
                   src={ shareIcon }
-                  alt="Share Icon"
-                />
-                {copiedLink()}
-              </button>
-              <button
-                data-testid={ `${i}-horizontal-favorite-btn` }
-                type="button"
-                src={ blackHeartIcon }
-              >
-                <img
+                  type="button"
+                  data-testid={ `${i}-horizontal-share-btn` }
+                  onClick={ () => copyUrl() }
+                >
+                  <img
+                    src={ shareIcon }
+                    alt="Share Icon"
+                  />
+                  {copiedLink()}
+                </button>
+                <button
+                  data-testid={ `${i}-horizontal-favorite-btn` }
+                  type="button"
                   src={ blackHeartIcon }
-                  alt="Favorite Icon"
-                />
-              </button>
+                  onClick={ removeFavoriteRecipe }
+                >
+                  <img
+                    src={ blackHeartIcon }
+                    alt="Favorite Icon"
+                  />
+                </button>
+              </div>
             </div>
-          </div>
-        )));
+          );
+        }));
     }
   }
+
+  useEffect(() => {
+    filterRecipes();
+  }, [update]);
 
   return (
     <>
       <Header history={ history } />
-
-      <p>Página da Receitas Favoritas</p>
 
       <section>
         <button
