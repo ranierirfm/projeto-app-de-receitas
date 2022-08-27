@@ -13,6 +13,9 @@ function SearchBar(props) {
     setIsSearch,
   } = useContext(MyRecipesContext);
 
+  const getSearchInput = document.getElementById('search-input');
+  const msg = 'Sorry, we haven\'t found any recipes for these filters.';
+
   useEffect(() => {
     if (inputValue && filterRadioType) return setIsDisabled(false);
     setIsDisabled(true);
@@ -28,22 +31,27 @@ function SearchBar(props) {
     if (filterRadioType === 'ingredient') {
       const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputValue}`)
         .then((response) => response.json());
-      setFoodFiltered({ foodList: [...meals], toggle: true, id: '' });
+      getSearchInput.value = '';
+      return meals ? setFoodFiltered({ foodList: [...meals], toggle: true, id: '' })
+        : global.alert(msg);
     }
     if (filterRadioType === 'name') {
       const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputValue}`)
         .then((response) => response.json());
-      setFoodFiltered({ foodList: [...meals], toggle: true, id: '' });
-    }
-    if (filterRadioType === 'firstLetter' && inputValue.length > 1) {
-      global.alert('Your search must have only 1 (one) character');
+      getSearchInput.value = '';
+      return meals ? setFoodFiltered({ foodList: [...meals], toggle: true, id: '' })
+        : global.alert(msg);
     }
     if (filterRadioType === 'firstLetter' && inputValue.length === 1) {
       const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputValue}`)
         .then((response) => response.json());
-      setFoodFiltered({ foodList: [...meals], toggle: true, id: '' });
+      getSearchInput.value = '';
+      return meals && setFoodFiltered({ foodList: [...meals], toggle: true, id: '' });
     }
-    document.getElementById('search-input').value = '';
+    if (filterRadioType === 'firstLetter' && inputValue.length > 1) {
+      getSearchInput.value = '';
+      return global.alert('Your search must have only 1 (one) character');
+    }
   };
 
   const searchDrinkRecipe = async () => {
@@ -52,36 +60,39 @@ function SearchBar(props) {
       const TWELVE = 12;
       const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`)
         .then((response) => response.json());
-      setDrinkFiltered({
+      getSearchInput.value = '';
+      return drinks ? setDrinkFiltered({
         drinkList: [...drinks.filter((_drink, index) => index < TWELVE)],
         toggle: true,
         id: '',
-      });
+      }) : global.alert(msg);
     }
     if (filterRadioType === 'name') {
       const TWELVE = 12;
       const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`)
         .then((response) => response.json());
-      setDrinkFiltered({
+      getSearchInput.value = '';
+      return drinks ? setDrinkFiltered({
+        drinkList: [...drinks.filter((_drink, index) => index < TWELVE)],
+        toggle: true,
+        id: '',
+      }) : global.alert(msg);
+    }
+    if (filterRadioType === 'firstLetter' && inputValue.length === 1) {
+      const TWELVE = 12;
+      const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputValue}`)
+        .then((response) => response.json());
+      getSearchInput.value = '';
+      return drinks && setDrinkFiltered({
         drinkList: [...drinks.filter((_drink, index) => index < TWELVE)],
         toggle: true,
         id: '',
       });
     }
     if (filterRadioType === 'firstLetter' && inputValue.length > 1) {
-      global.alert('Your search must have only 1 (one) character');
+      getSearchInput.value = '';
+      return global.alert('Your search must have only 1 (one) character');
     }
-    if (filterRadioType === 'firstLetter' && inputValue.length === 1) {
-      const TWELVE = 12;
-      const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputValue}`)
-        .then((response) => response.json());
-      setDrinkFiltered({
-        drinkList: [...drinks.filter((_drink, index) => index < TWELVE)],
-        toggle: true,
-        id: '',
-      });
-    }
-    document.getElementById('search-input').value = '';
   };
 
   return (

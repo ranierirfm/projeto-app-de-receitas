@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import App from '../App';
 import renderWithRouter from './helpers/renderWithRouter';
@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event';
 
 describe('Testing SearchBar component', () => {
   test('Testing if all elements are presents on the foods page', async () => {
+    global.alert = jest.fn();
     const { history } = renderWithRouter(<App />)
     history.push('/foods');
 
@@ -36,16 +37,25 @@ describe('Testing SearchBar component', () => {
 
     expect(garidesRecipe).toBeDefined()
 
-    userEvent.type(searchBar, 'Kumpir');
+    userEvent.type(searchBar, 't');
     userEvent.click(nameRadio);
     userEvent.click(searchButton)
-    const kumpirRecipe = await screen.findByText("Kumpir");
+    const kumpirRecipe = await screen.findByText("Poutine");
 
     expect(kumpirRecipe).toBeDefined();
+
+    userEvent.type(searchBar, 'GG');
+    userEvent.click(firstLetterRadio)
+    userEvent.click(searchButton)
+
+    await waitFor(() => {
+      expect(global.alert).toBeCalledWith('Your search must have only 1 (one) character');
+      })
     
   })
 
   test('Testing if all elements are presents on the drinks page', async () =>{
+    global.alert = jest.fn();
     const { history } = renderWithRouter(<App />)
     history.push('/drinks');
 
@@ -84,5 +94,70 @@ describe('Testing SearchBar component', () => {
     expect(froseRecipe).toBeDefined()
 
     userEvent.type(searchBar, 'GG');
+    userEvent.click(firstLetterRadio)
+    userEvent.click(searchButton)
+
+    await waitFor(() => {
+      expect(global.alert).toBeCalledWith('Your search must have only 1 (one) character');
+      })
+
+  })
+  test('Testing if message alert appears on the food screen', async () => {
+    global.alert = jest.fn();
+    const { history } = renderWithRouter(<App />)
+    history.push('/foods');
+
+    const searchIcon = screen.getByRole("button", { name: /search/i });
+    userEvent.click(searchIcon);
+    const searchBar = screen.getByRole("textbox");
+    userEvent.type(searchBar, 'aaaasasaaaa');
+    const ingredientRadio = screen.getByRole("radio", { name: /ingredient/i });
+    const nameRadio = screen.getByRole("radio", { name: /name/i });
+    const firstLetterRadio = screen.getByRole("radio", { name: /first letter/i });
+    const searchButton = screen.getAllByRole("button", { name: /search/i })[1];
+
+    userEvent.click(ingredientRadio);
+    userEvent.click(searchButton);
+
+    await waitFor(() => {
+      expect(global.alert).toBeCalledWith("Sorry, we haven't found any recipes for these filters.");
+      })
+
+    userEvent.type(searchBar, 'aaaaaaa');
+    userEvent.click(nameRadio);
+    userEvent.click(searchButton);
+    
+    await waitFor(() => {
+      expect(global.alert).toBeCalledWith("Sorry, we haven't found any recipes for these filters.");
+      })
+  })
+  test('Testing if message alert appears on the drinks screen', async () => {
+    global.alert = jest.fn();
+    const { history } = renderWithRouter(<App />)
+    history.push('/drinks');
+
+    const searchIcon = screen.getByRole("button", { name: /search/i });
+    userEvent.click(searchIcon);
+    const searchBar = screen.getByRole("textbox");
+    userEvent.type(searchBar, 'aaaasasaaaa');
+    const ingredientRadio = screen.getByRole("radio", { name: /ingredient/i });
+    const nameRadio = screen.getByRole("radio", { name: /name/i });
+    const firstLetterRadio = screen.getByRole("radio", { name: /first letter/i });
+    const searchButton = screen.getAllByRole("button", { name: /search/i })[1];
+
+    userEvent.click(ingredientRadio);
+    userEvent.click(searchButton);
+
+    await waitFor(() => {
+      expect(global.alert).toBeCalledWith("Sorry, we haven't found any recipes for these filters.");
+      })
+
+    userEvent.type(searchBar, 'aaaaaaa');
+    userEvent.click(nameRadio);
+    userEvent.click(searchButton);
+    
+    await waitFor(() => {
+      expect(global.alert).toBeCalledWith("Sorry, we haven't found any recipes for these filters.");
+      })
   })
 })

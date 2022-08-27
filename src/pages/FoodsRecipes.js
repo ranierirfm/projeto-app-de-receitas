@@ -38,8 +38,6 @@ function FoodsRecipes() {
     ))
   );
 
-  console.log(history);
-
   useEffect(() => {
     if (recipesList.length === 1 && isSearch) {
       setFoodFiltered({ ...foodFiltered, toggle: false });
