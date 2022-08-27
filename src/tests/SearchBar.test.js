@@ -28,14 +28,7 @@ describe('Testing SearchBar component', () => {
     const chickenRecipe = await screen.findByText("Brown Stew Chicken");
 
     expect(chickenRecipe).toBeDefined();
-
-    userEvent.type(searchBar, 'Kumpir');
-    userEvent.click(nameRadio);
-    userEvent.click(searchButton)
-    const kumpirRecipe = await screen.findByText("Kumpir");
-
-    expect(kumpirRecipe).toBeDefined();
-
+    
     userEvent.type(searchBar, 'G');
     userEvent.click(firstLetterRadio);
     userEvent.click(searchButton)
@@ -43,7 +36,12 @@ describe('Testing SearchBar component', () => {
 
     expect(garidesRecipe).toBeDefined()
 
-    userEvent.type(searchBar, 'GG');
+    userEvent.type(searchBar, 'Kumpir');
+    userEvent.click(nameRadio);
+    userEvent.click(searchButton)
+    const kumpirRecipe = await screen.findByText("Kumpir");
+
+    expect(kumpirRecipe).toBeDefined();
     
   })
 
@@ -78,7 +76,6 @@ describe('Testing SearchBar component', () => {
 
     expect(eggCreamRecipe).toBeDefined();
 
-    userEvent.type(searchBar, '');
     userEvent.type(searchBar, 'f');
     userEvent.click(firstLetterRadio);
     userEvent.click(searchButton)
