@@ -7,7 +7,11 @@ function SearchBar(props) {
   const [inputValue, setInputValue] = useState('');
   const [filterRadioType, setFilterRadioType] = useState('');
   const [isDisabled, setIsDisabled] = useState(true);
-  const { setFoodFiltered, setDrinkFiltered } = useContext(MyRecipesContext);
+  const {
+    setFoodFiltered,
+    setDrinkFiltered,
+    setIsSearch,
+  } = useContext(MyRecipesContext);
 
   useEffect(() => {
     if (inputValue && filterRadioType) return setIsDisabled(false);
@@ -20,6 +24,7 @@ function SearchBar(props) {
   };
 
   const searchFoodRecipe = async () => {
+    setIsSearch(true);
     if (filterRadioType === 'ingredient') {
       const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputValue}`)
         .then((response) => response.json());
@@ -42,6 +47,7 @@ function SearchBar(props) {
   };
 
   const searchDrinkRecipe = async () => {
+    setIsSearch(true);
     if (filterRadioType === 'ingredient') {
       const TWELVE = 12;
       const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`)

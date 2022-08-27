@@ -3,7 +3,13 @@ import { Link, useHistory } from 'react-router-dom';
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
 
 function FoodsRecipes() {
-  const { foodsRecipes, foodFiltered, setFoodFiltered } = useContext(MyRecipesContext);
+  const {
+    foodsRecipes,
+    foodFiltered,
+    setFoodFiltered,
+    isSearch,
+    setIsSearch,
+  } = useContext(MyRecipesContext);
   const { foodList, toggle } = foodFiltered;
   const history = useHistory();
 
@@ -35,8 +41,9 @@ function FoodsRecipes() {
   console.log(history);
 
   useEffect(() => {
-    if (recipesList.length === 1) {
+    if (recipesList.length === 1 && isSearch) {
       setFoodFiltered({ ...foodFiltered, toggle: false });
+      setIsSearch(false);
       return history.push(`foods/${foodList[0].idMeal}`);
     }
   }, [foodList]);
