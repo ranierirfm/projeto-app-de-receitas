@@ -14,12 +14,6 @@ function FavoriteRecipes(props) {
 
   const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
-  function copiedLink() {
-    if (transfArea === true) {
-      return ' Link copied!';
-    }
-  }
-
   function filterRecipes() {
     if (favRecipes !== null || favRecipes.length !== 0) {
       return (
@@ -31,17 +25,14 @@ function FavoriteRecipes(props) {
               .writeText(`${window.location.origin}/${type}s/${id}`);
             settransfArea(true);
           }
-
           const removeFavoriteRecipe = () => {
             const getFavorites = getFavoriteStorage();
             const updatedRecipe = getFavorites
               .filter((favoriteRecipe) => favoriteRecipe.id !== id);
-            console.log(getFavorites);
             saveFavoriteStorage(updatedRecipe);
             setupdate(!update);
           };
           return (
-
             <div key={ id }>
               <Link to={ `/${type}s/${id}` }>
                 <img
@@ -85,7 +76,7 @@ function FavoriteRecipes(props) {
                     src={ shareIcon }
                     alt="Share Icon"
                   />
-                  {copiedLink()}
+                  { transfArea === true ? ' Link copied!' : '' }
                 </button>
                 <button
                   data-testid={ `${i}-horizontal-favorite-btn` }
