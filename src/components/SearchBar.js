@@ -46,7 +46,7 @@ function SearchBar(props) {
       const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputValue}`)
         .then((response) => response.json());
       getSearchInput.value = '';
-      return meals && setFoodFiltered({ foodList: [...meals], toggle: true, id: '' })
+      return meals && setFoodFiltered({ foodList: [...meals], toggle: true, id: '' });
     }
     if (filterRadioType === 'firstLetter' && inputValue.length > 1) {
       getSearchInput.value = '';
