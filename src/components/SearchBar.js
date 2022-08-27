@@ -43,22 +43,37 @@ function SearchBar(props) {
 
   const searchDrinkRecipe = async () => {
     if (filterRadioType === 'ingredient') {
+      const TWELVE = 12;
       const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${inputValue}`)
         .then((response) => response.json());
-      setDrinkFiltered({ drinkList: [...drinks], toggle: true, id: '' });
+      setDrinkFiltered({
+        drinkList: [...drinks.filter((_drink, index) => index < TWELVE)],
+        toggle: true,
+        id: '',
+      });
     }
     if (filterRadioType === 'name') {
+      const TWELVE = 12;
       const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${inputValue}`)
         .then((response) => response.json());
-      setDrinkFiltered({ drinkList: [...drinks], toggle: true, id: '' });
+      setDrinkFiltered({
+        drinkList: [...drinks.filter((_drink, index) => index < TWELVE)],
+        toggle: true,
+        id: '',
+      });
     }
     if (filterRadioType === 'firstLetter' && inputValue.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     }
     if (filterRadioType === 'firstLetter' && inputValue.length === 1) {
+      const TWELVE = 12;
       const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${inputValue}`)
         .then((response) => response.json());
-      setDrinkFiltered({ drinkList: [...drinks], toggle: true, id: '' });
+      setDrinkFiltered({
+        drinkList: [...drinks.filter((_drink, index) => index < TWELVE)],
+        toggle: true,
+        id: '',
+      });
     }
     document.getElementById('search-input').value = '';
   };
