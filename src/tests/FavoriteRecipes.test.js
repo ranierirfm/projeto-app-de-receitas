@@ -24,35 +24,41 @@ describe('Testing Favorite Rrecipes Page', () => {
         expect(profileIcon).toHaveAttribute('src');
     })
 
-    // test('Testing if favorite contents are displayed on the screen',  async () => {
-    //     const { history } = renderWithRouter(<App />);
 
-    //     const emailInput = screen.getByRole("textbox");
-    //     const passwordInput = screen.getByPlaceholderText("Digite sua senha");
+
+    test('Testing if favorite contents are displayed on the screen',  async () => {
+        const { history } = renderWithRouter(<App />);
+
+
+        localStorage.setItem('favoriteRecipes', `[{"id":"52977","type":"food","nationality":"Turkish","category":"Side","alcoholicOrNot":"","name":"Corba"}]`)
+
+
+        // const emailInput = screen.getByRole("textbox");
+        // const passwordInput = screen.getByPlaceholderText("Digite sua senha");
         
-    //     userEvent.type(emailInput, 'meu@email.com')
-    //     userEvent.type(passwordInput, '1234567')
+        // userEvent.type(emailInput, 'meu@email.com')
+        // userEvent.type(passwordInput, '1234567')
         
-    //     const submitButton = screen.getByRole("button", { name: /enter/i });
-    //     userEvent.click(submitButton)
+        // const submitButton = screen.getByRole("button", { name: /enter/i });
+        // userEvent.click(submitButton)
 
-    //     const food = await screen.getByTestId('0-card-img');
-    //     userEvent.click(food)
+        // const food = await screen.getByTestId('0-card-img');
+        // userEvent.click(food)
 
-    //     const fav = await screen.getByRole("img", { name: /favorite icon/i });
-    //     userEvent.click(fav)
+        // const fav = await screen.getByRole("img", { name: /favorite icon/i });
+        // userEvent.click(fav)
 
-    //     history.push('/favorite-recipes');
+        history.push('/favorite-recipes');
 
-    //     const foodImg = screen.getByTestId('0-horizontal-image');
-    //     const foodTittle = screen.getByTestId('1-horizontal-top-text');
-
-
-    //     expect(foodImg).toBeDefined();
-    //     expect(foodTittle).toBeDefined();
+        const foodImg = screen.getByTestId('0-horizontal-image');
+        const foodTittle = screen.getByTestId('1-horizontal-top-text');
 
 
-    // })
+        expect(foodImg).toBeDefined();
+        expect(foodTittle).toBeDefined();
+
+
+    })
 
 })
 
