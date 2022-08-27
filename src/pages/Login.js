@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function Login() {
@@ -10,12 +10,17 @@ function Login() {
   const loginValidation = () => {
     const minCaracter = 6;
     const emailValidation = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailValidation.test(email) && password.length >= minCaracter) {
+    if (emailValidation.test(email) && password.length > minCaracter) {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
     }
   };
+  //
+
+  useEffect(() => {
+    loginValidation();
+  });
 
   const handleSubmit = () => {
     localStorage.setItem('cocktailsToken', JSON.stringify(1));
@@ -27,7 +32,6 @@ function Login() {
 
   const handleChange = ({ target }) => {
     const { value, name } = target;
-    loginValidation();
     if (name === 'email') {
       return setEmail(value);
     }

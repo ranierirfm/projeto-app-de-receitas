@@ -2,10 +2,10 @@ import React from 'react';
 import { Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render } from '@testing-library/react';
-
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from '../../redux/reducers';
+import MyRecipesProvider from '../../context/recipesContext/MyRecipesProvider';
 
 const renderWithRouterAndRedux = (
   component, // componente a ser renderizado
@@ -30,7 +30,9 @@ const renderWithRouterAndRedux = (
   ...render(
     <Router history={ history }>
       <Provider store={ store }>
-        {component}
+        <MyRecipesProvider>
+          {component}
+        </MyRecipesProvider>
       </Provider>
     </Router>,
   ),
