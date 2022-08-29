@@ -43,12 +43,17 @@ function RecipeInProgress() {
 
   const makeListIngredients = (ingredientsMerged) => (
     ingredientsMerged.map((ingredient, index) => (
-      <li
-        key={ ingredient }
-        data-testid={ `${index}-ingredient-step` }
-      >
-        {ingredient}
-      </li>
+      <div key={ ingredient }>
+        <label htmlFor={ index }>
+          <input
+            type="checkbox"
+            id={ index }
+            value={ ingredient }
+            data-testid={ `${index}-ingredient-step` }
+          />
+          {ingredient}
+        </label>
+      </div>
     ))
   );
 
