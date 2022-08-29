@@ -8,13 +8,29 @@ import { getFavoriteStorage, saveFavoriteStorage } from '../services/favoriteSto
 
 function FavoriteRecipes(props) {
   const { history } = props;
+  const storageRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const [transfArea, settransfArea] = useState(false);
   const [update, setupdate] = useState(false);
+  const [favRecipes, setfavRecipes] = useState(storageRecipes);
 
-  const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const filterAllRecipes = () => {
+    setfavRecipes(storageRecipes);
+  };
+  const filterFavoriteFoods = () => {
+    filterAllRecipes();
+    const favoriteFoods = favRecipes ? favRecipes
+      .filter((recipe) => recipe.type === 'food') : [];
+    setfavRecipes(favoriteFoods);
+  };
 
-  function filterRecipes() {
+  const filterFavoriteDrinks = () => {
+    filterAllRecipes();
+    const favoriteFoods = favRecipes ? favRecipes
+      .filter((recipe) => recipe.type === 'drink') : [];
+    setfavRecipes(favoriteFoods);
+  };
+  function showRecipes() {
     if (favRecipes !== null || favRecipes.length !== 0) {
       return (
         favRecipes.map((
@@ -97,9 +113,10 @@ function FavoriteRecipes(props) {
   }
 
   useEffect(() => {
-    filterRecipes();
+    showRecipes();
   }, [update]);
 
+  console.log(update);
   return (
     <>
       <Header history={ history } />
@@ -110,6 +127,7 @@ function FavoriteRecipes(props) {
           type="button"
           value="All"
           className="btn btn-primary"
+          onClick={ filterAllRecipes }
         >
           All
         </button>
@@ -118,6 +136,7 @@ function FavoriteRecipes(props) {
           data-testid="filter-by-food-btn"
           type="button"
           value="Food"
+          onClick={ filterFavoriteFoods }
         >
           Food
         </button>
@@ -126,12 +145,13 @@ function FavoriteRecipes(props) {
           data-testid="filter-by-drink-btn"
           type="button"
           value="Drinks"
+          onClick={ filterFavoriteDrinks }
         >
           Drinks
         </button>
       </section>
       {
-        filterRecipes()
+        showRecipes()
       }
     </>
   );
