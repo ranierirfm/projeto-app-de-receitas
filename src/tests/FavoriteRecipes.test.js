@@ -30,16 +30,25 @@ describe('Testing Favorite Rrecipes Page', () => {
         const { history } = renderWithRouter(<App />);
 
 
-        localStorage.setItem('favoriteRecipes', `[{"id":"52977","type":"food","nationality":"Turkish","category":"Side","alcoholicOrNot":"","name":"Corba"}]`)
+        localStorage.setItem('favoriteRecipes', `[{"id":"52977","type":"food","nationality":"Turkish","category":"Side","alcoholicOrNot":"","name":"Corba","image": "https://www.themealdb.com/images/media/meals/58oia61564916529.jpg"}]`)
 
         history.push('/favorite-recipes');
 
+        const tittle1 = screen.getByTestId('1-horizontal-top-text');
+        const tittle2 = screen.getByTestId('0-horizontal-top-text');
         const foodImg = screen.getByTestId('0-horizontal-image');
         const foodTittle = screen.getByTestId('1-horizontal-top-text');
+        const buttonShare = screen.getByRole("button", { name: /share icon/i });
+        const buttonFavorite= screen.getByRole("button", { name: /favorite icon/i });
+
 
 
         expect(foodImg).toBeDefined();
         expect(foodTittle).toBeDefined();
+        expect(buttonShare).toBeDefined();
+        expect(buttonFavorite).toBeDefined();
+        expect(tittle1).toBeDefined();
+        expect(tittle2).toBeDefined();
 
 
     })

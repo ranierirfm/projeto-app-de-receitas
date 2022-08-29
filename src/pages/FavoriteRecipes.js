@@ -130,17 +130,13 @@ function FavoriteRecipes(props) {
           Drinks
         </button>
       </section>
-
       {
         filterRecipes()
       }
-
     </>
   );
 }
-
 FavoriteRecipes.propTypes = {
   history: PropTypes.shape(object.PropTypes).isRequired,
 };
-
 export default FavoriteRecipes;
