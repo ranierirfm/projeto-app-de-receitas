@@ -3,16 +3,16 @@ import { useHistory } from 'react-router-dom';
 import ShareButton from '../components/ShareButton';
 import FavoriteButton from '../components/FavoriteButton';
 
-function RecipeInProgress() {
+function RecipeInProgress(props) {
   const [getRecipe, setGetRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [isFood, setIsFood] = useState(true);
   const history = useHistory();
-  const getUrl = history.location.pathname;
+  const { match: { url } } = props;
   const urlPart = history.location.pathname.split('/');
 
   const getRecipeApi = async () => {
-    if (getUrl.includes('foods')) {
+    if (url.includes('foods')) {
       const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlPart[2]}`)
         .then((response) => response.json());
       setGetRecipe(meals);
@@ -21,7 +21,7 @@ function RecipeInProgress() {
       setIngredients([...filterIngredientsAndMeasure]);
       setIsFood(true);
     }
-    if (getUrl.includes('drinks')) {
+    if (url.includes('drinks')) {
       const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${urlPart[2]}`)
         .then((response) => response.json());
       setGetRecipe(drinks);
@@ -44,12 +44,11 @@ function RecipeInProgress() {
   const makeListIngredients = (ingredientsMerged) => (
     ingredientsMerged.map((ingredient, index) => (
       <div key={ ingredient }>
-        <label htmlFor={ index }>
+        <label htmlFor={ index } data-testid={ `${index}-ingredient-step` }>
           <input
             type="checkbox"
             id={ index }
             value={ ingredient }
-            data-testid={ `${index}-ingredient-step` }
           />
           {ingredient}
         </label>
@@ -72,8 +71,8 @@ function RecipeInProgress() {
             alt=""
           />
           <p data-testid="recipe-title">{ recipe.strDrink }</p>
-          <ShareButton />
-          <FavoriteButton />
+          <FavoriteButton url={ url } id={ urlPart[2] } dataRecipe={ getRecipe[0] } />
+          <ShareButton url={ url } />
           <p data-testid="recipe-category">{recipe.strCategory}</p>
           <p data-testid="instructions">{recipe.strInstructions}</p>
           <ul>
@@ -109,8 +108,8 @@ function RecipeInProgress() {
             alt=""
           />
           <p data-testid="recipe-title">{ recipe.strMeal }</p>
-          <ShareButton />
-          <FavoriteButton />
+          <FavoriteButton url={ url } id={ urlPart[2] } dataRecipe={ getRecipe[0] } />
+          <ShareButton url={ url } />
           <p data-testid="recipe-category">{recipe.strCategory}</p>
           <p data-testid="instructions">{recipe.strInstructions}</p>
           <ul>
@@ -133,12 +132,10 @@ function RecipeInProgress() {
 
   useEffect(() => {
     getRecipeApi();
-    console.log(urlPart.includes('foods'));
   }, []);
+
   return (
-
     isFood ? showFoodRecipe() : showDrinksRecipe()
-
   );
 }
 
