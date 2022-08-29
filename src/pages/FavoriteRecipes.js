@@ -13,22 +13,24 @@ function FavoriteRecipes(props) {
   const [transfArea, settransfArea] = useState(false);
   const [update, setupdate] = useState(false);
   const [favRecipes, setfavRecipes] = useState(storageRecipes);
+  const [updateDrinkfilter, setupdateDrinkfilter] = useState(false);
+  const [updateFoodfilter, setupdateFoodfilter] = useState(false);
 
   const filterAllRecipes = () => {
     setfavRecipes(storageRecipes);
   };
   const filterFavoriteFoods = () => {
-    filterAllRecipes();
-    const favoriteFoods = favRecipes ? favRecipes
+    const favoriteFoods = favRecipes.length > 0 ? favRecipes
       .filter((recipe) => recipe.type === 'food') : [];
+    setupdateFoodfilter(!updateFoodfilter);
     setfavRecipes(favoriteFoods);
   };
 
   const filterFavoriteDrinks = () => {
-    filterAllRecipes();
-    const favoriteFoods = favRecipes ? favRecipes
+    const favoriteDrinks = favRecipes.length > 0 ? favRecipes
       .filter((recipe) => recipe.type === 'drink') : [];
-    setfavRecipes(favoriteFoods);
+    setupdateDrinkfilter(!updateDrinkfilter);
+    setfavRecipes(favoriteDrinks);
   };
   function showRecipes() {
     if (favRecipes !== null || favRecipes.length !== 0) {
@@ -39,6 +41,7 @@ function FavoriteRecipes(props) {
           function copyUrl() {
             navigator.clipboard
               .writeText(`${window.location.origin}/${type}s/${id}`);
+
             settransfArea(true);
           }
           const removeFavoriteRecipe = () => {
@@ -98,7 +101,7 @@ function FavoriteRecipes(props) {
                   data-testid={ `${i}-horizontal-favorite-btn` }
                   type="button"
                   src={ blackHeartIcon }
-                  onClick={ removeFavoriteRecipe }
+                  onClick={ () => removeFavoriteRecipe() }
                 >
                   <img
                     src={ blackHeartIcon }
@@ -112,11 +115,16 @@ function FavoriteRecipes(props) {
     }
   }
 
+  // useEffect(() => {
+  //   showRecipes();
+  // }, [update]);
+
   useEffect(() => {
     showRecipes();
   }, [update]);
 
-  console.log(update);
+  // console.log(update);
+
   return (
     <>
       <Header history={ history } />
