@@ -1,35 +1,27 @@
 import PropTypes, { object } from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import { getFavoriteStorage, saveFavoriteStorage } from '../services/favoriteStorage';
+import { saveFavoriteStorage } from '../services/favoriteStorage';
 
 function FavoriteRecipes(props) {
   const { history } = props;
   const storageRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const [transfArea, settransfArea] = useState(false);
-  const [update, setupdate] = useState(false);
   const [favRecipes, setfavRecipes] = useState(storageRecipes);
-  const [updateDrinkfilter, setupdateDrinkfilter] = useState(false);
-  const [updateFoodfilter, setupdateFoodfilter] = useState(false);
 
-  const filterAllRecipes = () => {
-    setfavRecipes(storageRecipes);
-  };
   const filterFavoriteFoods = () => {
     const favoriteFoods = favRecipes.length > 0 ? favRecipes
       .filter((recipe) => recipe.type === 'food') : [];
-    setupdateFoodfilter(!updateFoodfilter);
     setfavRecipes(favoriteFoods);
   };
 
   const filterFavoriteDrinks = () => {
     const favoriteDrinks = favRecipes.length > 0 ? favRecipes
       .filter((recipe) => recipe.type === 'drink') : [];
-    setupdateDrinkfilter(!updateDrinkfilter);
     setfavRecipes(favoriteDrinks);
   };
   function showRecipes() {
@@ -45,11 +37,11 @@ function FavoriteRecipes(props) {
             settransfArea(true);
           }
           const removeFavoriteRecipe = () => {
-            const getFavorites = getFavoriteStorage();
+            const getFavorites = favRecipes;
             const updatedRecipe = getFavorites
               .filter((favoriteRecipe) => favoriteRecipe.id !== id);
             saveFavoriteStorage(updatedRecipe);
-            setupdate(!update);
+            setfavRecipes(updatedRecipe);
           };
           return (
             <div key={ id }>
@@ -115,16 +107,6 @@ function FavoriteRecipes(props) {
     }
   }
 
-  // useEffect(() => {
-  //   showRecipes();
-  // }, [update]);
-
-  useEffect(() => {
-    showRecipes();
-  }, [update]);
-
-  // console.log(update);
-
   return (
     <>
       <Header history={ history } />
@@ -135,7 +117,7 @@ function FavoriteRecipes(props) {
           type="button"
           value="All"
           className="btn btn-primary"
-          onClick={ filterAllRecipes }
+          onClick={ () => setfavRecipes(storageRecipes) }
         >
           All
         </button>
