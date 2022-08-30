@@ -1,16 +1,50 @@
 import { screen } from "@testing-library/react";
 import React from "react";
+import userEvent from "@testing-library/user-event";
 import App from "../App";
-import renderWithRouter from "./helpers/renderWithRouter";
+import renderWithRouterAndRedux from "./helpers/renderWithRouterAndRedux";
 
 describe('Canvas head: done recipes', () => {
-  it('Tests if all buttons are on the screen', () => {
-    const { history } = renderWithRouter(<App />);
+  it('tests if all buttons are on the screen', () => {
+    const { history } = renderWithRouterAndRedux(<App />);
 
     history.push('/done-recipes')
 
     const all = screen.getByRole('button', { name: /all/i })
     const foodButton = screen.getByRole('button', { name: /food/i })
     const drinkButton = screen.getByRole('button', { name: /drink/i })
+
+    expect(all).toBeDefined();
+    expect(foodButton).toBeDefined();
+    expect(drinkButton).toBeDefined();
+  })
+
+  it('test the filter buttons', () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+
+    history.push('/done-recipes')
+
+    const all = screen.getByRole('button', { name: /all/i })
+    const foodButton = screen.getByRole('button', { name: /food/i })
+    const drinkButton = screen.getByRole('button', { name: /drink/i })
+
+    userEvent.click(all)
+    userEvent.click(foodButton)
+    userEvent.click(drinkButton)
+    userEvent.click(all)
+  })
+
+  it('test the filter buttons', () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+
+    history.push('/done-recipes')
+
+    const share = screen.getByTestId('0-horizontal-share-btn')
+    document.execCommand = jest.fn();
+    
+    userEvent.click(share)
+
+    const copied = screen.getByText(/link copied!/i)
+    expect(document.execCommand).toHaveBeenCalledWith("copy");
   })
 })

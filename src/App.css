@@ -66,8 +66,8 @@
 }
 
 .recomendation-img {
-  padding: 7px;
-  width: 45%;
+  border-radius: 5px;
+  width: 100%;
 }
 
 .recomendation-card {

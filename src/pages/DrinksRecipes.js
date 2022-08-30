@@ -44,6 +44,7 @@ function DrinksRecipes() {
       setIsSearch(false);
       return history.push(`drinks/${drinkList[0].idDrink}`);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drinkList]);
 
   return (
