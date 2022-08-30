@@ -1,6 +1,9 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import clipboardCopy from 'clipboard-copy';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
 
 class DoneRecipesCard extends React.Component {
@@ -8,41 +11,21 @@ class DoneRecipesCard extends React.Component {
     super();
 
     this.state = {
-      recipes: [{
-        id: '52771',
-        type: 'food',
-        nationality: 'Italian',
-        category: 'Vegetarian',
-        alcoholicOrNot: '',
-        name: 'Spicy Arrabiata Penne',
-        image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-        doneDate: '23/06/2020',
-        tags: ['Pasta', 'Curry'],
-      },
-      {
-        id: '178319',
-        type: 'drink',
-        nationality: '',
-        category: 'Cocktail',
-        alcoholicOrNot: 'Alcoholic',
-        name: 'Aquamarine',
-        image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-        doneDate: '23/06/2020',
-        tags: [],
-      }],
       isCopied: false,
     };
   }
 
   copyUrl = (type, id) => {
     clipboardCopy(`http://localhost:3000${`/${type}s/${id}`}`);
+
     this.setState({
       isCopied: true,
     });
   };
 
   createCard = () => {
-    const { recipes, isCopied } = this.state;
+    const { isCopied } = this.state;
+    const { doneRecipes: recipes } = this.props;
 
     return recipes.map((recipe, index) => {
       const {
@@ -51,12 +34,15 @@ class DoneRecipesCard extends React.Component {
 
       return (
         <Card key={ `done-recipes${id}` } className="recipe-card">
-          <h4 data-testid={ `${index}-horizontal-name` }>{name}</h4>
-          <img
-            src={ image }
-            alt={ name }
-            data-testid={ `${index}-horizontal-image` }
-          />
+          <Link to={ `/${type}s/${id}` }>
+            <h4 data-testid={ `${index}-horizontal-name` }>{name}</h4>
+            <img
+              src={ image }
+              alt={ name }
+              data-testid={ `${index}-horizontal-image` }
+              className="recomendation-img"
+            />
+          </Link>
           <p data-testid={ `${index}-horizontal-top-text` }>
             {type === 'food' ? (`${nationality} - ${category}`) : alcoholicOrNot}
           </p>
@@ -105,4 +91,12 @@ class DoneRecipesCard extends React.Component {
   }
 }
 
-export default DoneRecipesCard;
+const mapStateToProps = (store) => ({
+  doneRecipes: store.doneRecipesReducer.doneRecipesFiltered,
+});
+
+DoneRecipesCard.propTypes = {
+  doneRecipes: PropTypes.arrayOf(Object).isRequired,
+};
+
+export default connect(mapStateToProps)(DoneRecipesCard);
