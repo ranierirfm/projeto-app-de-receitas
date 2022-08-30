@@ -1,20 +1,30 @@
 import PropTypes, { object } from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
-import { getFavoriteStorage, saveFavoriteStorage } from '../services/favoriteStorage';
+import { saveFavoriteStorage } from '../services/favoriteStorage';
 
 function FavoriteRecipes(props) {
   const { history } = props;
+  const storageRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
 
   const [transfArea, settransfArea] = useState(false);
-  const [update, setupdate] = useState(false);
+  const [favRecipes, setfavRecipes] = useState(storageRecipes);
 
-  const favRecipes = JSON.parse(localStorage.getItem('favoriteRecipes'));
+  const filterFavoriteFoods = () => {
+    const favoriteFoods = favRecipes.length > 0 ? favRecipes
+      .filter((recipe) => recipe.type === 'food') : [];
+    setfavRecipes(favoriteFoods);
+  };
 
-  function filterRecipes() {
+  const filterFavoriteDrinks = () => {
+    const favoriteDrinks = favRecipes.length > 0 ? favRecipes
+      .filter((recipe) => recipe.type === 'drink') : [];
+    setfavRecipes(favoriteDrinks);
+  };
+  function showRecipes() {
     if (favRecipes !== null || favRecipes.length !== 0) {
       return (
         favRecipes.map((
@@ -23,14 +33,15 @@ function FavoriteRecipes(props) {
           function copyUrl() {
             navigator.clipboard
               .writeText(`${window.location.origin}/${type}s/${id}`);
+
             settransfArea(true);
           }
           const removeFavoriteRecipe = () => {
-            const getFavorites = getFavoriteStorage();
+            const getFavorites = favRecipes;
             const updatedRecipe = getFavorites
               .filter((favoriteRecipe) => favoriteRecipe.id !== id);
             saveFavoriteStorage(updatedRecipe);
-            setupdate(!update);
+            setfavRecipes(updatedRecipe);
           };
           return (
             <div key={ id }>
@@ -82,7 +93,7 @@ function FavoriteRecipes(props) {
                   data-testid={ `${i}-horizontal-favorite-btn` }
                   type="button"
                   src={ blackHeartIcon }
-                  onClick={ removeFavoriteRecipe }
+                  onClick={ () => removeFavoriteRecipe() }
                 >
                   <img
                     src={ blackHeartIcon }
@@ -96,10 +107,6 @@ function FavoriteRecipes(props) {
     }
   }
 
-  useEffect(() => {
-    filterRecipes();
-  }, [update]);
-
   return (
     <>
       <Header history={ history } />
@@ -110,6 +117,7 @@ function FavoriteRecipes(props) {
           type="button"
           value="All"
           className="btn btn-primary"
+          onClick={ () => setfavRecipes(storageRecipes) }
         >
           All
         </button>
@@ -118,6 +126,7 @@ function FavoriteRecipes(props) {
           data-testid="filter-by-food-btn"
           type="button"
           value="Food"
+          onClick={ filterFavoriteFoods }
         >
           Food
         </button>
@@ -126,21 +135,18 @@ function FavoriteRecipes(props) {
           data-testid="filter-by-drink-btn"
           type="button"
           value="Drinks"
+          onClick={ filterFavoriteDrinks }
         >
           Drinks
         </button>
       </section>
-
       {
-        filterRecipes()
+        showRecipes()
       }
-
     </>
   );
 }
-
 FavoriteRecipes.propTypes = {
   history: PropTypes.shape(object.PropTypes).isRequired,
 };
-
 export default FavoriteRecipes;
