@@ -13,6 +13,10 @@ function MyRecipesProvider({ children }) {
   const [drinkFiltered, setDrinkFiltered] = useState({
     drinkList: [], toggle: false, id: '' });
 
+  const [getRecipe, setGetRecipe] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [isFood, setIsFood] = useState(true);
+
   useEffect(() => {
     const fetchFoodsRecipes = async () => {
       const URL = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
@@ -53,6 +57,27 @@ function MyRecipesProvider({ children }) {
     fetchDrinksFilters();
   }, []);
 
+  const getRecipeApi = async (id, url) => {
+    if (url.includes('foods')) {
+      const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
+        .then((response) => response.json());
+      setGetRecipe(meals);
+      const filterIngredientsAndMeasure = Object.entries(meals[0]).filter((arr) => arr[0]
+        .includes('strIngredient') || arr[0].includes('strMeasure'));
+      setIngredients([...filterIngredientsAndMeasure]);
+      setIsFood(true);
+    }
+    if (url.includes('drinks')) {
+      const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+        .then((response) => response.json());
+      setGetRecipe(drinks);
+      const filterIngredientsAndMeasure = Object.entries(drinks[0]).filter((arr) => arr[0]
+        .includes('strIngredient') || arr[0].includes('strMeasure'));
+      setIngredients([...filterIngredientsAndMeasure]);
+      setIsFood(false);
+    }
+  };
+
   const contextValue = {
     foodsRecipes,
     drinksRecipes,
@@ -64,6 +89,10 @@ function MyRecipesProvider({ children }) {
     setDrinkFiltered,
     isSearch,
     setIsSearch,
+    getRecipeApi,
+    getRecipe,
+    ingredients,
+    isFood,
   };
   return (
     <MyRecipesContext.Provider value={ contextValue }>
