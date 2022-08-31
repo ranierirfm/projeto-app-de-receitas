@@ -1,69 +1,40 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import { getInProgressRecipe } from '../services/inProgressRecipeStorage';
 
 function StartRecipeButton(props) {
-  const [recipeDone, setRecipeDone] = useState(false);
-  const [inProgressRecipe, setInProgressRecipe] = useState(false);
+  // const [recipeDone, setRecipeDone] = useState(false);
+  // const [inProgressRecipe, setInProgressRecipe] = useState(false);
   const { recipeId, url } = props;
+  const history = useHistory();
 
-  useEffect(() => {
-    const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (getDoneRecipes) {
-      return getDoneRecipes
-        .some(({ id }) => id === recipeId) && setRecipeDone(true);
-    }
-  }, []);
+  const recipeDone = !JSON.parse(
+    localStorage.getItem('doneRecipes') || '[]',
+  ).some(({ id }) => id === recipeId);
 
-  useEffect(() => {
-    const getInProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (getInProgressRecipes && url.includes('foods')) {
-      return Object.keys(getInProgressRecipes.meals)
-        .some((id) => id === recipeId) && setInProgressRecipe(true);
-    }
-    if (getInProgressRecipes && url.includes('drinks')) {
-      return Object.keys(getInProgressRecipes.cocktails)
-        .some((id) => id === recipeId) && setInProgressRecipe(true);
-    }
-  });
-
-  const startRecipe = (
-    <Link
-      to={ `${url}/in-progress` }
-    >
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="progress-recipe btn btn-success"
-      >
-        Start Recipe
-      </button>
-    </Link>
-  );
-
-  const progressRecipe = (
-    <Link
-      to={ `${url}/in-progress` }
-    >
-      <button
-        type="button"
-        data-testid="start-recipe-btn"
-        className="progress-recipe btn btn-info"
-      >
-        Continue Recipe
-      </button>
-    </Link>
-  );
-
-  const showButton = () => {
-    if (inProgressRecipe) return progressRecipe;
-    if (!recipeDone) return startRecipe;
-    return null;
-  };
+  const inProgressRecipe = !Object.keys(getInProgressRecipe())
+    .some((id) => id === recipeId);
 
   return (
-    showButton()
+    recipeDone && (
+      <button
+        type="button"
+        data-testid="start-recipe-btn"
+        onClick={ () => { history.push(`${url}/in-progress`); } }
+        className={ inProgressRecipe
+          ? 'progress-recipe btn btn-info' : 'progress-recipe btn btn-success' }
+      >
+        {inProgressRecipe ? 'Continue Recipe' : 'Start Recipe'}
+      </button>
+    )
   );
 }
+
+StartRecipeButton.propTypes = {
+  recipeId: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
+};
 
 export default StartRecipeButton;

@@ -41,9 +41,9 @@ function FoodsRecipes() {
   useEffect(() => {
     if (recipesList.length === 1 && isSearch) {
       setFoodFiltered({ ...foodFiltered, toggle: false });
-      setIsSearch(false);
-      return history.push(`foods/${foodList[0].idMeal}`);
+      history.push(`foods/${foodList[0].idMeal}`);
     }
+    setIsSearch(false);
   }, [foodList]);
 
   return (

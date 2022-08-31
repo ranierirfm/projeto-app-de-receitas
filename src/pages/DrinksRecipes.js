@@ -41,9 +41,9 @@ function DrinksRecipes() {
   useEffect(() => {
     if (recipesList.length === 1 && isSearch) {
       setDrinkFiltered({ ...drinkFiltered, toggle: false });
-      setIsSearch(false);
-      return history.push(`drinks/${drinkList[0].idDrink}`);
+      history.push(`drinks/${drinkList[0].idDrink}`);
     }
+    setIsSearch(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drinkList]);
 

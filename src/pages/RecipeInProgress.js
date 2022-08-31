@@ -1,35 +1,59 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import ShareButton from '../components/ShareButton';
 import FavoriteButton from '../components/FavoriteButton';
+import { getInProgressRecipe,
+  saveInProgressRecipe } from '../services/inProgressRecipeStorage';
+import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
 
 function RecipeInProgress(props) {
-  const [getRecipe, setGetRecipe] = useState([]);
-  const [ingredients, setIngredients] = useState([]);
-  const [isFood, setIsFood] = useState(true);
+  // const [getRecipe, setGetRecipe] = useState([]);
+  // const [ingredients, setIngredients] = useState([]);
+  // const [isFood, setIsFood] = useState(true);
+  const [doneIngredients, setDoneIngredients] = useState({});
   const history = useHistory();
   const { match: { url } } = props;
   const urlPart = history.location.pathname.split('/');
+  const idRecipe = urlPart[2];
+  const { getRecipeApi, getRecipe, ingredients, isFood } = useContext(MyRecipesContext);
 
-  const getRecipeApi = async () => {
-    if (url.includes('foods')) {
-      const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlPart[2]}`)
-        .then((response) => response.json());
-      setGetRecipe(meals);
-      const filterIngredientsAndMeasure = Object.entries(meals[0]).filter((arr) => arr[0]
-        .includes('strIngredient') || arr[0].includes('strMeasure'));
-      setIngredients([...filterIngredientsAndMeasure]);
-      setIsFood(true);
+  // const getRecipeApi = async () => {
+  //   if (url.includes('foods')) {
+  //     const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlPart[2]}`)
+  //       .then((response) => response.json());
+  //     setGetRecipe(meals);
+  //     const filterIngredientsAndMeasure = Object.entries(meals[0]).filter((arr) => arr[0]
+  //       .includes('strIngredient') || arr[0].includes('strMeasure'));
+  //     setIngredients([...filterIngredientsAndMeasure]);
+  //     setIsFood(true);
+  //   }
+  //   if (url.includes('drinks')) {
+  //     const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${urlPart[2]}`)
+  //       .then((response) => response.json());
+  //     setGetRecipe(drinks);
+  //     const filterIngredientsAndMeasure = Object.entries(drinks[0]).filter((arr) => arr[0]
+  //       .includes('strIngredient') || arr[0].includes('strMeasure'));
+  //     setIngredients([...filterIngredientsAndMeasure]);
+  //     setIsFood(false);
+  //   }
+  // };
+
+  const handleIngredientsDone = ({ target }) => {
+    const { id } = target;
+    let recipes = getInProgressRecipe();
+    if (recipes[idRecipe]) {
+      if (recipes[idRecipe].some((ingredient) => ingredient === Number(id) + 1)) {
+        const ingredientFilter = recipes[idRecipe]
+          .filter((ingredient) => ingredient !== Number(id) + 1);
+        recipes = { ...recipes, [idRecipe]: [...ingredientFilter] };
+      } else {
+        recipes = { ...recipes, [idRecipe]: [...recipes[idRecipe], Number(id) + 1] };
+      }
+    } else {
+      recipes = { ...recipes, [idRecipe]: [Number(id) + 1] };
     }
-    if (url.includes('drinks')) {
-      const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${urlPart[2]}`)
-        .then((response) => response.json());
-      setGetRecipe(drinks);
-      const filterIngredientsAndMeasure = Object.entries(drinks[0]).filter((arr) => arr[0]
-        .includes('strIngredient') || arr[0].includes('strMeasure'));
-      setIngredients([...filterIngredientsAndMeasure]);
-      setIsFood(false);
-    }
+    saveInProgressRecipe(recipes);
+    setDoneIngredients(recipes);
   };
 
   const ingredientsToMerge = (ingredientsList, measureList) => (
@@ -49,6 +73,10 @@ function RecipeInProgress(props) {
             type="checkbox"
             id={ index }
             value={ ingredient }
+            onChange={ handleIngredientsDone }
+            checked={ !doneIngredients[idRecipe]
+              ? false : doneIngredients[idRecipe]
+                .some((ing) => ing === index + 1) }
           />
           {ingredient}
         </label>
@@ -72,7 +100,7 @@ function RecipeInProgress(props) {
           />
           <p data-testid="recipe-title">{ recipe.strDrink }</p>
           <FavoriteButton url={ url } id={ urlPart[2] } dataRecipe={ getRecipe[0] } />
-          <ShareButton url={ url } />
+          <ShareButton url={ `/drinks/${urlPart[2]}` } />
           <p data-testid="recipe-category">{recipe.strCategory}</p>
           <p data-testid="instructions">{recipe.strInstructions}</p>
           <ul>
@@ -109,7 +137,7 @@ function RecipeInProgress(props) {
           />
           <p data-testid="recipe-title">{ recipe.strMeal }</p>
           <FavoriteButton url={ url } id={ urlPart[2] } dataRecipe={ getRecipe[0] } />
-          <ShareButton url={ url } />
+          <ShareButton url={ `/foods/${urlPart[2]}` } />
           <p data-testid="recipe-category">{recipe.strCategory}</p>
           <p data-testid="instructions">{recipe.strInstructions}</p>
           <ul>
@@ -131,7 +159,12 @@ function RecipeInProgress(props) {
   };
 
   useEffect(() => {
-    getRecipeApi();
+    getRecipeApi(idRecipe, url);
+  }, []);
+
+  useEffect(() => {
+    const recipes = getInProgressRecipe();
+    setDoneIngredients(recipes);
   }, []);
 
   return (
