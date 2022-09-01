@@ -144,12 +144,10 @@ function RecipeInProgress(props) {
     setDoneIngredients(recipes);
   }, []);
 
-  useEffect(() => {
-    if (doneIngredients[idRecipe]) {
-      return doneIngredients[idRecipe].length === ingrMerged
-        ? setIsDisabled(false) : setIsDisabled(true);
-    }
-  });
+  useEffect(() => (
+    doneIngredients[idRecipe]?.length === ingrMerged
+      ? setIsDisabled(false) : setIsDisabled(true)
+  ));
 
   return (
     isFood ? showFoodRecipe() : showDrinksRecipe()
