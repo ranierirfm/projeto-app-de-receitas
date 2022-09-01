@@ -12,7 +12,6 @@ function MyRecipesProvider({ children }) {
     foodList: [], toggle: false, id: '' });
   const [drinkFiltered, setDrinkFiltered] = useState({
     drinkList: [], toggle: false, id: '' });
-
   const [getRecipe, setGetRecipe] = useState([]);
   const [ingredients, setIngredients] = useState([]);
   const [isFood, setIsFood] = useState(true);
@@ -57,6 +56,15 @@ function MyRecipesProvider({ children }) {
     fetchDrinksFilters();
   }, []);
 
+  const ingredientsToMerge = (ingredientsList, measureList) => (
+    ingredientsList.reduce((acc, curr, index) => {
+      if (curr[1]) {
+        acc.push(`${curr[1]} - ${measureList[index][1]}`);
+      }
+      return acc;
+    }, [])
+  );
+
   const getRecipeApi = async (id, url) => {
     if (url.includes('foods')) {
       const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
@@ -93,6 +101,7 @@ function MyRecipesProvider({ children }) {
     getRecipe,
     ingredients,
     isFood,
+    ingredientsToMerge,
   };
   return (
     <MyRecipesContext.Provider value={ contextValue }>

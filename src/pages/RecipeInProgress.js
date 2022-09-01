@@ -7,36 +7,18 @@ import { getInProgressRecipe,
 import MyRecipesContext from '../context/recipesContext/MyRecipesContext';
 
 function RecipeInProgress(props) {
-  // const [getRecipe, setGetRecipe] = useState([]);
-  // const [ingredients, setIngredients] = useState([]);
-  // const [isFood, setIsFood] = useState(true);
   const [doneIngredients, setDoneIngredients] = useState({});
+  const [isDisabled, setIsDisabled] = useState(true);
   const history = useHistory();
   const { match: { url } } = props;
   const urlPart = history.location.pathname.split('/');
   const idRecipe = urlPart[2];
-  const { getRecipeApi, getRecipe, ingredients, isFood } = useContext(MyRecipesContext);
-
-  // const getRecipeApi = async () => {
-  //   if (url.includes('foods')) {
-  //     const { meals } = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${urlPart[2]}`)
-  //       .then((response) => response.json());
-  //     setGetRecipe(meals);
-  //     const filterIngredientsAndMeasure = Object.entries(meals[0]).filter((arr) => arr[0]
-  //       .includes('strIngredient') || arr[0].includes('strMeasure'));
-  //     setIngredients([...filterIngredientsAndMeasure]);
-  //     setIsFood(true);
-  //   }
-  //   if (url.includes('drinks')) {
-  //     const { drinks } = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${urlPart[2]}`)
-  //       .then((response) => response.json());
-  //     setGetRecipe(drinks);
-  //     const filterIngredientsAndMeasure = Object.entries(drinks[0]).filter((arr) => arr[0]
-  //       .includes('strIngredient') || arr[0].includes('strMeasure'));
-  //     setIngredients([...filterIngredientsAndMeasure]);
-  //     setIsFood(false);
-  //   }
-  // };
+  const { getRecipeApi,
+    getRecipe,
+    ingredients,
+    isFood,
+    ingredientsToMerge } = useContext(MyRecipesContext);
+  let ingrMerged;
 
   const handleIngredientsDone = ({ target }) => {
     const { id } = target;
@@ -55,15 +37,6 @@ function RecipeInProgress(props) {
     saveInProgressRecipe(recipes);
     setDoneIngredients(recipes);
   };
-
-  const ingredientsToMerge = (ingredientsList, measureList) => (
-    ingredientsList.reduce((acc, curr, index) => {
-      if (curr[1]) {
-        acc.push(`${curr[1]} - ${measureList[index][1]}`);
-      }
-      return acc;
-    }, [])
-  );
 
   const makeListIngredients = (ingredientsMerged) => (
     ingredientsMerged.map((ingredient, index) => (
@@ -90,6 +63,7 @@ function RecipeInProgress(props) {
     const measureList = ingredients
       .filter((measure) => measure[0].includes('strMeasure'));
     const ingredientsMerged = ingredientsToMerge(ingredientsList, measureList);
+    ingrMerged = ingredientsMerged.length;
     return (
       getRecipe.map((recipe) => (
         <div key={ recipe.idDrink }>
@@ -99,8 +73,8 @@ function RecipeInProgress(props) {
             alt=""
           />
           <p data-testid="recipe-title">{ recipe.strDrink }</p>
-          <FavoriteButton url={ url } id={ urlPart[2] } dataRecipe={ getRecipe[0] } />
-          <ShareButton url={ `/drinks/${urlPart[2]}` } />
+          <FavoriteButton url={ url } id={ idRecipe } dataRecipe={ getRecipe[0] } />
+          <ShareButton url={ `/drinks/${idRecipe}` } />
           <p data-testid="recipe-category">{recipe.strCategory}</p>
           <p data-testid="instructions">{recipe.strInstructions}</p>
           <ul>
@@ -113,6 +87,7 @@ function RecipeInProgress(props) {
             type="button"
             id="button"
             data-testid="finish-recipe-btn"
+            disabled={ isDisabled }
             onClick={ () => {} }
           >
             Finalizar Receita
@@ -127,6 +102,7 @@ function RecipeInProgress(props) {
     const measureList = ingredients
       .filter((measure) => measure[0].includes('strMeasure'));
     const ingredientsMerged = ingredientsToMerge(ingredientsList, measureList);
+    ingrMerged = ingredientsMerged.length;
     return (
       getRecipe.map((recipe) => (
         <div key={ recipe.idMeal }>
@@ -136,8 +112,8 @@ function RecipeInProgress(props) {
             alt=""
           />
           <p data-testid="recipe-title">{ recipe.strMeal }</p>
-          <FavoriteButton url={ url } id={ urlPart[2] } dataRecipe={ getRecipe[0] } />
-          <ShareButton url={ `/foods/${urlPart[2]}` } />
+          <FavoriteButton url={ url } id={ idRecipe } dataRecipe={ getRecipe[0] } />
+          <ShareButton url={ `/foods/${idRecipe}` } />
           <p data-testid="recipe-category">{recipe.strCategory}</p>
           <p data-testid="instructions">{recipe.strInstructions}</p>
           <ul>
@@ -150,6 +126,7 @@ function RecipeInProgress(props) {
             type="button"
             id="button"
             data-testid="finish-recipe-btn"
+            disabled={ isDisabled }
             onClick={ () => {} }
           >
             Finalizar Receita
@@ -166,6 +143,13 @@ function RecipeInProgress(props) {
     const recipes = getInProgressRecipe();
     setDoneIngredients(recipes);
   }, []);
+
+  useEffect(() => {
+    if (doneIngredients[idRecipe]) {
+      return doneIngredients[idRecipe].length === ingrMerged
+        ? setIsDisabled(false) : setIsDisabled(true);
+    }
+  });
 
   return (
     isFood ? showFoodRecipe() : showDrinksRecipe()
