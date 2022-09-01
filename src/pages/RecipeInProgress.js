@@ -20,6 +20,10 @@ function RecipeInProgress(props) {
     ingredientsToMerge } = useContext(MyRecipesContext);
   let ingrMerged;
 
+  const changeRoute = () => {
+    history.push('/done-recipes');
+  };
+
   const handleIngredientsDone = ({ target }) => {
     const { id } = target;
     let recipes = getInProgressRecipe();
@@ -88,7 +92,7 @@ function RecipeInProgress(props) {
             id="button"
             data-testid="finish-recipe-btn"
             disabled={ isDisabled }
-            onClick={ () => {} }
+            onClick={ changeRoute }
           >
             Finalizar Receita
           </button>
@@ -127,7 +131,7 @@ function RecipeInProgress(props) {
             id="button"
             data-testid="finish-recipe-btn"
             disabled={ isDisabled }
-            onClick={ () => {} }
+            onClick={ changeRoute }
           >
             Finalizar Receita
           </button>
