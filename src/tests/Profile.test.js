@@ -4,6 +4,7 @@ import React from 'react';
 import App from '../App';
 
 import renderWithRouter from './helpers/renderWithRouter';
+import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
 
 describe('Testando a página Profile', () => {
   test('Se a página Profile está presente e funcional', () => {
@@ -21,7 +22,7 @@ describe('Testando a página Profile', () => {
   })
 
   test('Se o botão Done Recipes  ao ser clicado direciona a pagina correta', () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
     history.push('/profile');
 
     const donekButton = screen.getByTestId('profile-done-btn');

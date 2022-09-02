@@ -21,7 +21,7 @@ describe('Testindo Recipe Details page', () => {
 
     expect(recomendationRecipe).toHaveLength(6);
 
-    const startRecipeButton = await screen.findByRole("button", { name: /start recipe/i });
+    const startRecipeButton = await screen.findByRole("button", { name: /continue recipe/i });
 
   })
   test('Testing if all elements are present on the screen in the drink page', async () => {
@@ -39,7 +39,7 @@ describe('Testindo Recipe Details page', () => {
 
     expect(recomendationRecipe).toHaveLength(6);
 
-    const startRecipeButton = await screen.findByRole("button", { name: /start recipe/i });
+    const startRecipeButton = await screen.findByRole("button", { name: /continue recipe/i });
 
   })
 })

@@ -10,9 +10,9 @@ export const saveInProgressRecipe = (recipe) => localStorage
 export const getInProgressRecipe = () => JSON.parse(localStorage
   .getItem(IN_PROGRESS_RECIPE));
 
-export const addInProgressRecipe = ({ recipe }) => {
-  if (recipe) {
-    const recipesList = getInProgressRecipe();
-    return saveInProgressRecipe({ ...recipesList, recipe });
-  }
-};
+// export const addInProgressRecipe = ({ recipe }) => {
+//   if (recipe) {
+//     const recipesList = getInProgressRecipe();
+//     return saveInProgressRecipe({ ...recipesList, recipe });
+//   }
+// };
