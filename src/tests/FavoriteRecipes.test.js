@@ -63,7 +63,7 @@ describe('Testing Favorite Rrecipes Page', () => {
     expect(tittle1).toBeDefined();
     expect(tittle2).toBeDefined();
   })
-  test('Testing buttons filter', async () => {
+  test('Testing buttons filter', async () => { 
     saveFavoriteStorage(favoriteRecipes);
     const { history } = renderWithRouterAndRedux(<App />);
     history.push('/favorite-recipes');
@@ -82,11 +82,5 @@ describe('Testing Favorite Rrecipes Page', () => {
     userEvent.click(drinkFilter);
     const foodFilter = await screen.findByRole("button", { name: /food/i });
     userEvent.click(foodFilter);
-  })
-  test('Testing empty localStorage', () => {
-    const test = getFavoriteStorage();
-    localStorage.clear();
-    const { history } = renderWithRouterAndRedux(<App />);
-    history.push('/favorite-recipes');
   })
 })
