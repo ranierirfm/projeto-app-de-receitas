@@ -1,11 +1,17 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import React from 'react';
 import App from '../App';
-import renderWithRouter from './helpers/renderWithRouter';
+import userEvent from '@testing-library/user-event';
+import renderWithRouterAndRedux from './helpers/renderWithRouterAndRedux';
+import { meals } from '../../cypress/mocks/meals';
 
 describe('Testing foods recipes main page', () => {
+  // afterEach(() => {
+  //   global.fetch.mockClear();
+  // });
+
   test('Testing if have a title and buttons filters', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
     history.push('/foods')
     
     const foodTitle = screen.getByRole("heading", { name: /foods/i });
@@ -30,7 +36,7 @@ describe('Testing foods recipes main page', () => {
     
   })
   test('Testing if have images cards and your length in food recipes page', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
     history.push('/foods')
 
     const allImageCards = await screen.findAllByRole("img");
@@ -39,19 +45,11 @@ describe('Testing foods recipes main page', () => {
     expect(history.location.pathname).toBe('/foods');
 
   })
-  test('testing if filters work correctly', async () => {
-    // const { history } = renderWithRouter(<App />);
-    // history.push('/foods')
-
-    // const beefFilter = await screen.findByRole("button", { name: /beef/i });
-    // userEvent.click(beefFilter);
-    // screen.logTestingPlaygroundURL();
-  })
 })
 
 describe('Testing drinks recipes main page', () => {
   test('Testing if have a title and buttons filters', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
     history.push('/drinks')
 
     const drinkTitle = screen.getByRole("heading", { name: /drinks/i });
@@ -76,7 +74,7 @@ describe('Testing drinks recipes main page', () => {
 
   })
   test('Testing if have images cards and your length in drink recipes page', async () => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
     history.push('/drinks')
 
     const allImageCards = await screen.findAllByRole("img");
@@ -84,5 +82,37 @@ describe('Testing drinks recipes main page', () => {
     expect(allImageCards).toHaveLength(2);
     expect(history.location.pathname).toBe('/drinks');
 
+  })
+  test('Testing if render drinks details page', async () => {
+    const { history } = renderWithRouterAndRedux(<App />);
+    history.push('/drinks')
+   
+    const searchActivate = screen.getAllByRole("button", { name: /search/i })[0];
+    userEvent.click(searchActivate);
+    const searchInput = screen.getByRole("textbox");
+    userEvent.type(searchInput, 'A1');
+    expect(searchInput).toHaveValue('A1');
+    const nameRadius = screen.getByText("Name");
+    userEvent.click(nameRadius);
+    const searchButton = screen.getAllByRole("button", { name: /search/i })[1];
+    userEvent.click(searchButton);
+  })
+  test('Testing if render foods details page', async () => {
+    // jest.spyOn(global, 'fetch').mockResolvedValue({
+    //   json: jest.fn().mockResolvedValue(meals)
+    // })
+    const { history } = renderWithRouterAndRedux(<App />);
+    history.push('/foods')
+   
+    const searchActivate = screen.getAllByRole("button", { name: /search/i })[0];
+    userEvent.click(searchActivate);
+    const searchInput = screen.getByRole("textbox");
+    userEvent.type(searchInput, 'Burek');
+    expect(searchInput).toHaveValue('Burek');
+    const nameRadius = screen.getByRole("radio", { name: /name/i });
+    userEvent.click(nameRadius);
+    const searchButton = screen.getAllByRole("button", { name: /search/i })[1];
+    userEvent.click(searchButton);
+    // const favoriteIcon = await screen.findByRole("img", { name: /favorite icon/i })
   })
 })

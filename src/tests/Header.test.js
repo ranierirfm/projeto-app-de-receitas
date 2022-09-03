@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
+import renderWithRouterAndRedux from "./helpers/renderWithRouterAndRedux";
 
 describe('test header based on req 7-9', () => {
 
@@ -39,7 +40,7 @@ describe('test header based on req 7-9', () => {
   })
 
   const testHearderInPages = (title, path) => {
-    const { history } = renderWithRouter(<App />);
+    const { history } = renderWithRouterAndRedux(<App />);
     history.push(path)
 
     const titlePage = screen.getByRole('heading', { name: title })

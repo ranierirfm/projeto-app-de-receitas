@@ -5,8 +5,8 @@ import renderWithRouter from './helpers/renderWithRouter';
 import userEvent from '@testing-library/user-event';
 
 describe('Testing SearchBar component', () => {
+  global.alert = jest.fn(()=>{})
   test('Testing if all elements are presents on the foods page', async () => {
-    global.alert = jest.fn();
     const { history } = renderWithRouter(<App />)
     history.push('/foods');
 
