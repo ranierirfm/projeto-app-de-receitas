@@ -10,6 +10,9 @@ Aplicação de receitas feita com React, Redux e Context API.
 
 Aplicativo de receitas desenvolvido em grupo onde conseguimos fazer um mix de tecnologias a critério didático e integrar todos em uma única aplicação.
 
+
+![App-recipe](https://user-images.githubusercontent.com/86271591/188612338-fa2a8822-008f-4294-900a-1da21483b71c.png)
+
 ## 🚀 Tecnologias
 > Este projeto foi desenvolvido com as seguintes tecnologias:
 
