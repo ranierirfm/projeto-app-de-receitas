@@ -20,6 +20,7 @@ Aplicativo de receitas desenvolvido em grupo onde conseguimos fazer um mix de te
 - React
 - Context-API
 - Redux
+- RTL
 
 ## 📌 Habilidades
 
@@ -29,6 +30,7 @@ Aplicativo de receitas desenvolvido em grupo onde conseguimos fazer um mix de te
 - Conectar Redux aos componentes React;
 - Criar actions assíncronas em uma aplicação React que faz uso de Redux.
 - Construir componentes funcionais e utilizar os hooks do React.
+- Realizar testes em componentes.
 - Trabalhar com metodologia Ágil.
 
 ## ⬇️ Instalando dependências
