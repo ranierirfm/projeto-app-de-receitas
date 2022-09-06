@@ -1,4 +1,7 @@
+# 🚧 README em construção 🚧
+
 # Projeto app de receitas
+
 
 Aplicação de receitas feita com React, Redux e Context API.
 > [Acessar página do projeto](https://xxxxxxxxxx.github.io/Projeto-xxxxxxxxxx/)
@@ -49,14 +52,14 @@ npm test
   <a href = "mailto:ranierirfm@hotmail.com"><img height="28rem" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
 </div>
 
-## 👨‍💻👩‍💻 Contribuintes
+<!-- ## 👨‍💻👩‍💻 Contribuintes
 <div>
     <table>
         <tr>
             <td align="center"><a href="https://github.com/ranierirfm"><img src="https://avatars.githubusercontent.com/u/86271591?v=4" width="135px;" height="135px;" alt=""/><br /><b>Ranieri Fernandes Miguel</b></a></td>
         </tr>
     </table>
-</div>
+</div> -->
 
 <!-- ## 📄 Licença
 
