@@ -4,7 +4,7 @@
 
 
 Aplicação de receitas feita com React, Redux e Context API.
-> [Acessar página do projeto](https://xxxxxxxxxx.github.io/Projeto-xxxxxxxxxx/)
+<!-- > [Acessar página do projeto](https://xxxxxxxxxx.github.io/Projeto-xxxxxxxxxx/) -->
 
 ## 💻 Projeto
 
