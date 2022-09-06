@@ -25,7 +25,7 @@ Aplicativo de receitas desenvolvido em grupo onde conseguimos fazer um mix de te
 - Criar um store, reducers, actions e dispatchers no Redux em aplicações React;
 - Conectar Redux aos componentes React;
 - Criar actions assíncronas em uma aplicação React que faz uso de Redux.
-- Construir componentes funcionais e utulizar os hooks do React. 
+- Construir componentes funcionais e utilizar os hooks do React. 
 
 ## ⬇️ Instalando dependências
 
