@@ -1,16 +1,66 @@
-# 🚧 README em construção 🚧
+# Projeto app de receitas
 
-<!-- Olá, Tryber!
+Aplicação de receitas feita com React, Redux e Context API.
+> [Acessar página do projeto](https://xxxxxxxxxx.github.io/Projeto-xxxxxxxxxx/)
 
-Esse é apenas um arquivo inicial para o README do seu projeto.
+## 💻 Projeto
 
-É essencial que você preencha esse documento por conta própria, ok?
+Aplicativo de receitas desenvolvido em grupo onde conseguimos fazer um mix de tecnologias a critério didático e integrar todos em uma única aplicação.
 
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
+## 🚀 Tecnologias
+> Este projeto foi desenvolvido com as seguintes tecnologias:
 
-⚠️ IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
+- JavaScript
+- React
+- Context-API
+- Redux
 
--->
+## 📌 Habilidades
+
+> Neste projeto, desenvolvi as seguintes habilidades:
+
+- Criar um store, reducers, actions e dispatchers no Redux em aplicações React;
+- Conectar Redux aos componentes React;
+- Criar actions assíncronas em uma aplicação React que faz uso de Redux.
+- Construir componentes funcionais e utulizar os hooks do React. 
+
+## ⬇️ Instalando dependências
+
+```bash
+npm install
+``` 
+
+## ⚡ Executando a aplicação
+
+```bash
+npm start
+``` 
+
+## 🧪 Executando os testes
+
+```bash
+npm test
+```
+
+## 💬 Contatos
+
+<div align="center" style="display: inline_block">
+  <a href="https://github.com/ranierirfm/" target="_blank"><img height="28rem" src="https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white"></a> 
+  <a href = "mailto:ranierirfm@hotmail.com"><img height="28rem" src="https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white" target="_blank"></a>
+</div>
+
+## 👨‍💻👩‍💻 Contribuintes
+<div>
+    <table>
+        <tr>
+            <td align="center"><a href="https://github.com/ranierirfm"><img src="https://avatars.githubusercontent.com/u/86271591?v=4" width="135px;" height="135px;" alt=""/><br /><b>Ranieri Fernandes Miguel</b></a></td>
+        </tr>
+    </table>
+</div>
+
+<!-- ## 📄 Licença
+
+Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
+
+
+[⬆ Voltar ao topo](#nome-do-projeto)<br> -->
